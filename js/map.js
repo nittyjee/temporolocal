@@ -230,15 +230,15 @@ map.on('load', function(){
 //USA
 /////////////////////////////////////////////////////////////
 
-map.addSource('us_major_boundary_labels',{
+map.addSource('us_major_boundary_labels_src',{
     'type': 'vector',
     'url': 'mapbox://nittyjee.biuuelz7',
 });
 
 /* labels for US Major Boundaries */
 map.addLayer({
-'id': 'US_Major_Boundaries_Labels-2hsz5k',
-'source': 'us_major_boundary_labels',
+'id': 'us_major_boundary_labels',
+'source': 'us_major_boundary_labels_src',
 'source-layer': 'shapefile_export-4f28wr',
 'type': 'symbol',
 'maxzoom': 6,
@@ -253,8 +253,8 @@ map.addLayer({
 
 //------------------------------------------------
 'filter': ['all',
-  ['<=', 'YearStart', yr],
-  ['>=', 'YearEnd', yr]
+  ['<=', 'start_n', date],
+  ['>=', 'end_n', date]
 ]
 });
   
@@ -473,8 +473,8 @@ function changeDate(unixDate){
     ];
   
   var dateFilter = ['all',
-    ['<=', 'start_n', year],
-    ['>=', 'end_n', year]
+    ['<=', 'start_n', date],
+    ['>=', 'end_n', date]
   ];
 
   map.setFilter('buildings', yrFilter);
@@ -484,5 +484,5 @@ function changeDate(unixDate){
   map.setFilter('us_major_boundaries', dateFilter);
   map.setFilter('US_Minor_Boundaries-1lyzcs', yrFilter);
   map.setFilter('Indian_Subcontinent-abr9su', yrFilter);
-  map.setFilter('US_Major_Boundaries_Labels-2hsz5k', yrFilter);
+  map.setFilter('us_major_boundary_labels', dateFilter);
 }
