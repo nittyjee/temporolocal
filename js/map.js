@@ -5,8 +5,8 @@ var map = new mapboxgl.Map({
   style: 'mapbox://styles/mapbox/light-v9',
 //  style: 'mapbox://styles/mapbox/satellite-v9',
   hash: true,
-  center: [-93.6135, 42.0256],
-  zoom: 15,
+  center: [-94, 38],
+  zoom: 4,
   pitchWithRotate: false,
 })
 
@@ -617,40 +617,68 @@ map.addLayer({
 /////////////////////////////////////////////////////////////
 
 
-map.addSource('global_settlements_points',{
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//OPTION 1
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+ map.addLayer({
+        'id': 'population',
+        'type': 'circle',
+        'source': {
+            type: 'vector',
+            url: 'mapbox://nittyjee.c9okffto'
+        },
+        'source-layer': 'shp-2lsmbo',
+        'paint': {
+            'circle-radius': 4,
+//            'circle-color': '#e55e5e'
+        },
+		
+    'filter': ['all',
+      ['<=', 'YearStart', yr],
+      ['>=', 'YearEnd', yr]
+    ]
+		
+
+});
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//OPTION 2
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*
+
+map.addSource('population_src',{
     'type': 'vector',
     'url': 'mapbox://nittyjee.c9okffto',
 });
 
-/* labels for US Major Boundaries */
 map.addLayer({
-'id': 'global_settlements_id',
-'source': 'global_settlements_points',
-//'source-layer': 'shapefile_export-4f28wr',
+'id': 'population',
+'source': 'population_src',
 'source-layer': 'shp-2lsmbo',
-'type': 'symbol',
+'type': 'circle',
 'maxzoom': 6,
 
 //------------------------------------------------
-'layout': {
-  'symbol-placement': 'point',
-},
-/*
-'paint': {
-  'text-color': 'red'
-},
-*/
-
+        'paint': {
+            'circle-radius': 4,
+            'circle-color': '#e55e5e'
+        },
 //------------------------------------------------
-'filter': ['all',
-  ['<=', 'YearStart', yr],
-  ['>=', 'YearEnd', yr]
-]
+    'filter': ['all',
+      ['<=', 'YearStart', yr],
+      ['>=', 'YearEnd', yr]
+    ]
 });
 
-
-
-
+*/
+  
+  
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -779,7 +807,7 @@ map.setFilter('us_major_boundary_labels', dateFilter);
   map.setFilter('Indian_Subcontinent_Major_Bou-4a0c14', yrFilter);
   
 //Global Settlements - points
-  map.setFilter('global_settlements_id', yrFilter);
+  map.setFilter('population', yrFilter);
   
 //-------------------------------------------------------------------------------------
 
