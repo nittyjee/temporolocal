@@ -10,18 +10,6 @@ var map = new mapboxgl.Map({
   pitchWithRotate: false,
 })
 
-
-map.on('load', () =>{
-    map.addLayer({
-      id: 'naturalearth',
-      source: {
-        type: 'raster',
-        tiles: ['https://a.tiles.mapbox.com/v3/mapbox.natural-earth-2/{z}/{x}/{y}@2x.png']
-      },
-      type: 'raster'
-    })
-})
-
 var nav = new mapboxgl.NavigationControl();
 map.addControl(nav, 'top-left');
 
@@ -38,20 +26,25 @@ map.on('load', function(){
     document.location.href = 'raster-version.html' + urlHash;
   })
 
+  //Add neatural earth
+
+  map.addLayer({
+    id: 'naturalearth',
+    source: {
+      type: 'raster',
+      tiles: ['https://a.tiles.mapbox.com/v3/mapbox.natural-earth-2/{z}/{x}/{y}@2x.png']
+    },
+    type: 'raster'
+  })
   
-  
-  
-/////////////////////////////////////////////////////////////
-//Add buildings layers
-/////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////
+  //Add buildings layers
+  /////////////////////////////////////////////////////////////
 
-
-/////////////////////////////////////////////////////////////
-//Ames, IA
-//Buildings
-/////////////////////////////////////////////////////////////
-
-
+  /////////////////////////////////////////////////////////////
+  //Ames, IA
+  //Buildings
+  /////////////////////////////////////////////////////////////
   map.addLayer({
     'id': 'buildings',
     'type': 'fill',
@@ -82,14 +75,11 @@ map.on('load', function(){
       ['>=', 'YearEnd', yr]
     ]
   });
-
   
-  
-  
-/////////////////////////////////////////////////////////////
-//Netherlands
-//Buildings
-/////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////
+  //Netherlands
+  //Buildings
+  /////////////////////////////////////////////////////////////
 
   map.addLayer({
     'id': 'netherlands_buildings-6wkgma',
@@ -121,22 +111,15 @@ map.on('load', function(){
       ['>=', 'YearEnd', yr]
     ]
   });
-  
-  
 
-  
-  
-/////////////////////////////////////////////////////////////
-//Add boundaries layers
-/////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////
+  //Add boundaries layers
+  /////////////////////////////////////////////////////////////
 
-
-
-
-/////////////////////////////////////////////////////////////
-//Add Minor Boundaries Layer
-//USA
-/////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////
+  //Add Minor Boundaries Layer
+  //USA
+  /////////////////////////////////////////////////////////////
 
   map.addLayer({
     'id': 'US_Minor_Boundaries-1lyzcs',
@@ -146,41 +129,26 @@ map.on('load', function(){
     },
     'source-layer': 'US_Minor_Boundariesgeojson',
     'type': 'fill',
-	'maxzoom': 6,
-
-//-------------------------------------------
+    'maxzoom': 6,
     'paint': {
 //		'line-color': '#000000'
 		'fill-outline-color': 'rgba(0, 0, 0, 0.15)',
         'fill-color': 'rgba(0, 0, 0, 0)'
     },
-//-------------------------------------------
     'filter': ['all',
       ['<=', 'YearStart', yr],
       ['>=', 'YearEnd', yr]
     ]
-//------------------------------------------------
   });
 
+  /////////////////////////////////////////////////////////////
+  //Add Major Boundaries Layer
+  //USA
+  /////////////////////////////////////////////////////////////
 
-
-
-  
-/////////////////////////////////////////////////////////////
-//Add Major Boundaries Layer
-//USA
-/////////////////////////////////////////////////////////////
-
-
-
-
-/////////////////////////////////////////////////////////////
-//Lines
-/////////////////////////////////////////////////////////////
-
-
-///*-----------------------------------------------------------------------------------------------------
-
+  /////////////////////////////////////////////////////////////
+  //Lines
+  /////////////////////////////////////////////////////////////
 
   map.addLayer({
     'id': 'US_Major_Boundaries_Lines-aceyhz',
@@ -190,93 +158,66 @@ map.on('load', function(){
     },
     'source-layer': 'US_Major_Boundaries_Linesgeojson',
     'type': 'line',
-	'maxzoom': 6,
-	
-
-
-//------------------------------------------------
+    'maxzoom': 6,
     'paint': {
-		'line-offset': 1,
-		'line-width': 1.5,
-		'line-color': {
-          'property': 'TERR_TYPE',
-          'type': 'categorical',
-          'stops': [
-		//Bright Blue
-		['Colony', '#0000ee'],
-		//Orange
-		['Unorganized Territory', '#ff9900'],
-		//Dark Red
-		['Territory', '#cc3300'],
-		//Bright Red
-		['State', '#cd0000'],
-		//Bright Green
-		['Other', '#009933'],
-		//Black
-		['District of Columbia', '#000000'],
-          ]
-        },
-		
-
-///*-----------------------------------------------------------------------------------------------------
-		
+      'line-offset': 1,
+      'line-width': 1.5,
+      'line-color': {
+        'property': 'TERR_TYPE',
+        'type': 'categorical',
+        'stops': [
+          //Bright Blue
+          ['Colony', '#0000ee'],
+          //Orange
+          ['Unorganized Territory', '#ff9900'],
+          //Dark Red
+          ['Territory', '#cc3300'],
+          //Bright Red
+          ['State', '#cd0000'],
+          //Bright Green
+          ['Other', '#009933'],
+          //Black
+          ['District of Columbia', '#000000'],
+        ]
+      },	
     },
-
-	
-//------------------------------------------------
     'filter': ['all',
       ['<=', 'DayStart', date],
       ['>=', 'DayEnd', date]
     ]
-//------------------------------------------------
   });
   
-//-----------------------------------------------------------------------------------------------------*/
+  /////////////////////////////////////////////////////////////
+  //Add Labels Layer
+  //Major Boundaries
+  //USA
+  /////////////////////////////////////////////////////////////
 
-
-  
-
-  
-  
-/////////////////////////////////////////////////////////////
-//Add Labels Layer
-//Major Boundaries
-//USA
-/////////////////////////////////////////////////////////////
-
-map.addSource('us_major_boundary_labels_src',{
+  map.addSource('us_major_boundary_labels_src',{
     'type': 'vector',
     'url': 'mapbox://nittyjee.biuuelz7',
-});
+  });
 
-/* labels for US Major Boundaries */
-map.addLayer({
-'id': 'us_major_boundary_labels',
-'source': 'us_major_boundary_labels_src',
-'source-layer': 'shapefile_export-4f28wr',
-'type': 'symbol',
-'maxzoom': 6,
-
-//------------------------------------------------
-'layout': {
-  'text-field': '{name}',
-},
-/*
-'paint': {
-  'text-color': 'red'
-},
-*/
-
-//------------------------------------------------
-'filter': ['all',
-  ['<=', 'DayStart', date],
-  ['>=', 'DayEnd', date]
-]
-});
-  
-
-
-  
+  /* labels for US Major Boundaries */
+  map.addLayer({
+  'id': 'us_major_boundary_labels',
+  'source': 'us_major_boundary_labels_src',
+  'source-layer': 'shapefile_export-4f28wr',
+  'type': 'symbol',
+  'maxzoom': 6,
+  'layout': {
+    'text-field': '{name}',
+  },
+  /*
+  'paint': {
+    'text-color': 'red'
+  },
+  */
+  'filter': ['all',
+    ['<=', 'DayStart', date],
+    ['>=', 'DayEnd', date]
+  ]
+  });
   
 /////////////////////////////////////////////////////////////
 //Add Major Boundaries Layer
@@ -416,29 +357,12 @@ map.addLayer({
         }
     },
 	
-//------------------------------------------------
     'filter': ['all',
       ['<=', 'YearStart', yr],
       ['>=', 'YearEnd', yr]
     ]
 
   });
-  
-
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
 /////////////////////////////////////////////////////////////
 //Add Major Boundaries Layer
@@ -591,18 +515,7 @@ map.addLayer({
 //------------------------------------------------
   });
   
-  
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
 /////////////////////////////////////////////////////////////
 //Add Settlements Layer
@@ -623,27 +536,22 @@ map.addLayer({
 //OPTION 1
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
- map.addLayer({
-        'id': 'population',
-        'type': 'circle',
-        'source': {
-            type: 'vector',
-            url: 'mapbox://nittyjee.c9okffto'
-        },
-        'source-layer': 'shp-2lsmbo',
-        'paint': {
-            'circle-radius': 4,
-//            'circle-color': '#e55e5e'
-        },
-		
+  map.addLayer({
+    'id': 'population',
+    'type': 'circle',
+    'source': {
+      type: 'vector',
+      url: 'mapbox://nittyjee.c9okffto'
+    },
+    'source-layer': 'shp-2lsmbo',
+    'paint': {
+      'circle-radius': 4,
+    },
     'filter': ['all',
       ['<=', 'YearStart', yr],
       ['>=', 'YearEnd', yr]
     ]
-		
-
-});
+  });
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //OPTION 2
@@ -795,21 +703,16 @@ map.setFilter('Indian_Subcontinent-abr9su', yrFilter);
   
 //US Major Boundaries- Labels
 map.setFilter('us_major_boundary_labels', dateFilter);
-}
 
-
-
-
-
-//-------------------------------------------------------------------------------------
-  
 //Indian Subcontinent Major Boundaries - lines
-  map.setFilter('Indian_Subcontinent_Major_Bou-4a0c14', yrFilter);
-  
+map.setFilter('Indian_Subcontinent_Major_Bou-4a0c14', yrFilter);
+
 //Global Settlements - points
-  map.setFilter('population', yrFilter);
-  
-//-------------------------------------------------------------------------------------
+map.setFilter('population', yrFilter);
+
+
+}  //end map load
+
 
 
 
