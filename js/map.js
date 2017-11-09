@@ -372,150 +372,130 @@ map.on('load', function(){
 
 
   map.addLayer({
-      'id': 'Indian_Subcontinent_Major_Bou-4a0c14',
+    'id': 'Indian_Subcontinent_Major_Bou-4a0c14',
     'source': {
       'type': 'vector',
       'url': 'mapbox://nittyjee.4f4v8pxo',
     },
-      'source-layer': 'Indian_Subcontinent_Major_Boundaries_Linesgeojson',
+    'source-layer': 'Indian_Subcontinent_Major_Boundaries_Linesgeojson',
     'type': 'line',
-	'maxzoom': 6,
-
-//------------------------------------------------
-
-/*
-
+    'maxzoom': 6,
     'paint': {
-//		'line-offset': 1,
-//		'line-width': 1.5,
+    //		'line-offset': 1,
+    //		'line-width': 1.5,
 		'line-color': {
-          'property': 'TYPE',
-          'type': 'categorical',
-          'stops': [
-['Afghans', 'rgba(0,0,0,1)'],
-//
-//Agency should be dashed:
-['Agency', 'rgba(0,0,0,1)'],
-//
-['Agency (Princely)', 'rgba(0,0,0,1)'],
-['Agency, British Portion', 'rgba(0,0,0,1)'],
-['ANEX_COMPLETE', 'rgba(0,0,0,1)'],
-['ANNEX_COMPLET', 'rgba(0,0,0,1)'],
-['ANNEX_COMPLETE', 'rgba(0,0,0,1)'],
-['ANNEXED_COMPLETE', 'rgba(0,0,0,1)'],
-['ANNEXED_PROTECTED', 'rgba(0,0,0,1)'],
-['ANNEXED_TWICE', 'rgba(0,0,0,1)'],
-['Autonomous Area', 'rgba(0,0,0,1)'],
-['Bangash', 'rgba(0,0,0,1)'],
-['BANGLADESH', 'rgba(0,0,0,1)'],
-['Benares', 'rgba(0,0,0,1)'],
-['Bengal', 'rgba(0,0,0,1)'],
-['British', 'rgba(0,0,0,1)'],
-['British (administration)', 'rgba(0,0,0,1)'],
-['British (direct relations)', 'rgba(0,0,0,1)'],
-['British (feudatory)', 'rgba(0,0,0,1)'],
-['British (leased)', 'rgba(0,0,0,1)'],
-['British (Partial)', 'rgba(0,0,0,1)'],
-['British (protectorate)', 'rgba(0,0,0,1)'],
-['British (Province)', 'rgba(0,0,0,1)'],
-['British (Special)', 'rgba(0,0,0,1)'],
-['British (subordinate ally)', 'rgba(0,0,0,1)'],
-['British (Temporary)', 'rgba(0,0,0,1)'],
-['British special treaty', 'rgba(0,0,0,1)'],
-//["British, Chief Commissioner's Province", 'rgba(0,0,0,1)'],
-['British, Chief Commissionership', 'rgba(0,0,0,1)'],
-['Carnatic', 'rgba(0,0,0,1)'],
-['CARNATIC', 'rgba(0,0,0,1)'],
-['CIS-SUTLEJ SIKHS', 'rgba(0,0,0,1)'],
-['Cochin', 'rgba(0,0,0,1)'],
-['COCHIN', 'rgba(0,0,0,1)'],
-//
-//Crown Colony should have black outline:
-['Crown Colony', 'rgba(0,0,0,1)'],
-//
-['Cutch', 'rgba(0,0,0,1)'],
-['CUTCH', 'rgba(0,0,0,1)'],
-['Denmark', 'rgba(0,0,0,1)'],
-['DUTCH', 'rgba(0,0,0,1)'],
-['FARRUKHABAD', 'rgba(0,0,0,1)'],
-['Feudatory State', 'rgba(0,0,0,1)'],
-['French', 'rgba(0,0,0,1)'],
-['Gorakhpur', 'rgba(0,0,0,1)'],
-['INDIA', 'rgba(0,0,0,1)'],
-['Jammu & Kashmir (Protection', 'rgba(0,0,0,1)'],
-//['Jammu & Kashmir (Protection)', 'rgba(0,0,0,1)'],
-['Jats', 'rgba(0,0,0,1)'],
-['JATS', 'rgba(0,0,0,1)'],
-['Kalhoras', 'rgba(0,0,0,1)'],
-['Lahore', 'rgba(0,0,0,1)'],
-['Lower Doab', 'rgba(0,0,0,1)'],
-['Malabar', 'rgba(0,0,0,1)'],
-['MALABAR', 'rgba(0,0,0,1)'],
-//
-//Marathas or MARATHA should not have a border:
-['MARATHA', 'rgba(0,0,0,0)'],
-//
-['Marathas', 'rgba(0,0,0,0)'],
-['Mughals', 'rgba(0,0,0,1)'],
-['MUGHALS', 'rgba(0,0,0,1)'],
-['Mysore', 'rgba(0,0,0,1)'],
-['MYSORE', 'rgba(0,0,0,1)'],
-['NEPAL', 'rgba(0,0,0,1)'],
-['Nizam', 'rgba(0,0,0,1)'],
-['NIZAM', 'rgba(0,0,0,1)'],
-['Northern Circars', 'rgba(0,0,0,1)'],
-['Oudh', 'rgba(0,0,0,1)'],
-['OUDH', 'rgba(0,0,0,1)'],
-['PAKISTAN', 'rgba(0,0,0,1)'],
-['Portuguese', 'rgba(0,0,0,1)'],
-['PORTUGUESE', 'rgba(0,0,0,1)'],
-['Portuguese India', 'rgba(0,0,0,1)'],
-//
-//Presidency should be dashed:
-['Presidency', 'rgba(0,0,0,1)'],
-//
-['Princely Area', 'rgba(0,0,0,1)'],
-['Princely_State', 'rgba(0,0,0,1)'],
-['PROTECED_COMPLETE', 'rgba(0,0,0,1)'],
-['PROTECTED', 'rgba(0,0,0,1)'],
-['PROTECTED_ANNEXED', 'rgba(0,0,0,1)'],
-['PROTECTED_COMPLETE', 'rgba(0,0,0,1)'],
-['PROTECTED_TWICE', 'rgba(0,0,0,1)'],
-//
-//Province should have black outline:
-['Province', 'rgba(0,0,0,1)'],
-//
-['Province (British)', 'rgba(0,0,0,1)'],
-['Province (Princely)', 'rgba(0,0,0,1)'],
-['Province', 'rgba(0,0,0,1)'],
-['RAJPUTANA', 'rgba(0,0,0,1)'],
-['Rajputs', 'rgba(0,0,0,1)'],
-['Rohilkhand', 'rgba(0,0,0,1)'],
-['Rohillas', 'rgba(0,0,0,1)'],
-['SAVANTVADI', 'rgba(0,0,0,1)'],
-['SINDHIA', 'rgba(0,0,0,1)'],
-['SIROHI', 'rgba(0,0,0,1)'],
-['TANJORE', 'rgba(0,0,0,1)'],
-['TRAVANCORE', 'rgba(0,0,0,1)'],
-['Unlabeled', 'rgba(0,0,0,1)'],
-['UNLABELED', 'rgba(0,0,0,1)'],
-['NULL', 'rgba(0,0,0,1)'],
-          ]
+        'property': 'TYPE',
+        'type': 'categorical',
+        'stops': [
+          ['Afghans', 'rgba(0,0,0,1)'],
+          //Agency should be dashed:
+          ['Agency', 'rgba(0,0,0,1)'],
+          ['Agency (Princely)', 'rgba(0,0,0,1)'],
+          ['Agency, British Portion', 'rgba(0,0,0,1)'],
+          ['ANEX_COMPLETE', 'rgba(0,0,0,1)'],
+          ['ANNEX_COMPLET', 'rgba(0,0,0,1)'],
+          ['ANNEX_COMPLETE', 'rgba(0,0,0,1)'],
+          ['ANNEXED_COMPLETE', 'rgba(0,0,0,1)'],
+          ['ANNEXED_PROTECTED', 'rgba(0,0,0,1)'],
+          ['ANNEXED_TWICE', 'rgba(0,0,0,1)'],
+          ['Autonomous Area', 'rgba(0,0,0,1)'],
+          ['Bangash', 'rgba(0,0,0,1)'],
+          ['BANGLADESH', 'rgba(0,0,0,1)'],
+          ['Benares', 'rgba(0,0,0,1)'],
+          ['Bengal', 'rgba(0,0,0,1)'],
+          ['British', 'rgba(0,0,0,1)'],
+          ['British (administration)', 'rgba(0,0,0,1)'],
+          ['British (direct relations)', 'rgba(0,0,0,1)'],
+          ['British (feudatory)', 'rgba(0,0,0,1)'],
+          ['British (leased)', 'rgba(0,0,0,1)'],
+          ['British (Partial)', 'rgba(0,0,0,1)'],
+          ['British (protectorate)', 'rgba(0,0,0,1)'],
+          ['British (Province)', 'rgba(0,0,0,1)'],
+          ['British (Special)', 'rgba(0,0,0,1)'],
+          ['British (subordinate ally)', 'rgba(0,0,0,1)'],
+          ['British (Temporary)', 'rgba(0,0,0,1)'],
+          ['British special treaty', 'rgba(0,0,0,1)'],
+          //["British, Chief Commissioner's Province", 'rgba(0,0,0,1)'],
+          ['British, Chief Commissionership', 'rgba(0,0,0,1)'],
+          ['Carnatic', 'rgba(0,0,0,1)'],
+          ['CARNATIC', 'rgba(0,0,0,1)'],
+          ['CIS-SUTLEJ SIKHS', 'rgba(0,0,0,1)'],
+          ['Cochin', 'rgba(0,0,0,1)'],
+          ['COCHIN', 'rgba(0,0,0,1)'],
+          //Crown Colony should have black outline:
+          ['Crown Colony', 'rgba(0,0,0,1)'],
+          ['Cutch', 'rgba(0,0,0,1)'],
+          ['CUTCH', 'rgba(0,0,0,1)'],
+          ['Denmark', 'rgba(0,0,0,1)'],
+          ['DUTCH', 'rgba(0,0,0,1)'],
+          ['FARRUKHABAD', 'rgba(0,0,0,1)'],
+          ['Feudatory State', 'rgba(0,0,0,1)'],
+          ['French', 'rgba(0,0,0,1)'],
+          ['Gorakhpur', 'rgba(0,0,0,1)'],
+          ['INDIA', 'rgba(0,0,0,1)'],
+          ['Jammu & Kashmir (Protection', 'rgba(0,0,0,1)'],
+          //['Jammu & Kashmir (Protection)', 'rgba(0,0,0,1)'],
+          ['Jats', 'rgba(0,0,0,1)'],
+          ['JATS', 'rgba(0,0,0,1)'],
+          ['Kalhoras', 'rgba(0,0,0,1)'],
+          ['Lahore', 'rgba(0,0,0,1)'],
+          ['Lower Doab', 'rgba(0,0,0,1)'],
+          ['Malabar', 'rgba(0,0,0,1)'],
+          ['MALABAR', 'rgba(0,0,0,1)'],
+          //Marathas or MARATHA should not have a border:
+          ['MARATHA', 'rgba(0,0,0,0)'],
+          ['Marathas', 'rgba(0,0,0,0)'],
+          ['Mughals', 'rgba(0,0,0,1)'],
+          ['MUGHALS', 'rgba(0,0,0,1)'],
+          ['Mysore', 'rgba(0,0,0,1)'],
+          ['MYSORE', 'rgba(0,0,0,1)'],
+          ['NEPAL', 'rgba(0,0,0,1)'],
+          ['Nizam', 'rgba(0,0,0,1)'],
+          ['NIZAM', 'rgba(0,0,0,1)'],
+          ['Northern Circars', 'rgba(0,0,0,1)'],
+          ['Oudh', 'rgba(0,0,0,1)'],
+          ['OUDH', 'rgba(0,0,0,1)'],
+          ['PAKISTAN', 'rgba(0,0,0,1)'],
+          ['Portuguese', 'rgba(0,0,0,1)'],
+          ['PORTUGUESE', 'rgba(0,0,0,1)'],
+          ['Portuguese India', 'rgba(0,0,0,1)'],
+          //Presidency should be dashed:
+          ['Presidency', 'rgba(0,0,0,1)'],
+          //
+          ['Princely Area', 'rgba(0,0,0,1)'],
+          ['Princely_State', 'rgba(0,0,0,1)'],
+          ['PROTECED_COMPLETE', 'rgba(0,0,0,1)'],
+          ['PROTECTED', 'rgba(0,0,0,1)'],
+          ['PROTECTED_ANNEXED', 'rgba(0,0,0,1)'],
+          ['PROTECTED_COMPLETE', 'rgba(0,0,0,1)'],
+          ['PROTECTED_TWICE', 'rgba(0,0,0,1)'],
+          //
+          //Province should have black outline:
+          ['Province', 'rgba(0,0,0,1)'],
+          //
+          ['Province (British)', 'rgba(0,0,0,1)'],
+          ['Province (Princely)', 'rgba(0,0,0,1)'],
+          ['RAJPUTANA', 'rgba(0,0,0,1)'],
+          ['Rajputs', 'rgba(0,0,0,1)'],
+          ['Rohilkhand', 'rgba(0,0,0,1)'],
+          ['Rohillas', 'rgba(0,0,0,1)'],
+          ['SAVANTVADI', 'rgba(0,0,0,1)'],
+          ['SINDHIA', 'rgba(0,0,0,1)'],
+          ['SIROHI', 'rgba(0,0,0,1)'],
+          ['TANJORE', 'rgba(0,0,0,1)'],
+          ['TRAVANCORE', 'rgba(0,0,0,1)'],
+          ['Unlabeled', 'rgba(0,0,0,1)'],
+          ['UNLABELED', 'rgba(0,0,0,1)'],
+          ['NULL', 'rgba(0,0,0,1)'],
+        ]
+      },
+    },
 
-		},
-        },
-
-*/
-	
-//------------------------------------------------
     'filter': ['all',
       ['<=', 'YearStart', yr],
       ['>=', 'YearEnd', yr]
     ]
-//------------------------------------------------
   });
-  
-
   
 /////////////////////////////////////////////////////////////
 //Add Settlements Layer
