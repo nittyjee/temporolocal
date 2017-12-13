@@ -1,7 +1,7 @@
 # MapStory Local: How to Make Changes to the Map
 ## Current Version: 1.2
 
-Below are the basic steps to make changes to MapStory Local. At the moment, it is not possible to edit the map directly, but data can be appended or replaced. If you have some data you'd like to add to the map, or replace existing data with, these are the instructions to follow.
+Below are the basic steps to make changes to MapStory Local. At the moment, it is not possible to edit the map directly, but data can be appended or replaced. If you have some data you'd like to add to the map, or replace existing data with, these are the instructions to follow. More thorough instructions will come soon.
 
 
 ### Data Preparation
