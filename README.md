@@ -30,6 +30,8 @@ Below are the basic steps to make changes to MapStory Local. At the moment, it i
 (7) Demo the changes (v1.2.html).
 - Note: May take time for tileset to process on server and be seen.
 
-(8) Push changes to map.js file, map will update.
+(8) Upload geojson file to central data repository, and add link as a comment in the map.js file: []
+
+(9) Push changes to map.js file, map will update.
 - This requires access to server
 
