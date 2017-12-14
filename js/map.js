@@ -151,10 +151,11 @@ map.on('load', function(){
   /////////////////////////////////////////////////////////////
 
   map.addLayer({
-    'id': 'US_Major_Boundaries_Lines-aceyhz',
+//    'id': 'US_Major_Boundaries_Lines-aceyhz',
+    'id': 'US_Major_Boundaries_Lines-2706lh',
     'source': {
       'type': 'vector',
-      'url': 'mapbox://nittyjee.4on3pu72',
+      'url': 'mapbox://nittyjee.ajotvzcc',
     },
     'source-layer': 'US_Major_Boundaries_Linesgeojson',
     'type': 'line',
@@ -192,17 +193,17 @@ map.on('load', function(){
   //Major Boundaries
   //USA
   /////////////////////////////////////////////////////////////
-
+  
   map.addSource('us_major_boundary_labels_src',{
     'type': 'vector',
-    'url': 'mapbox://nittyjee.biuuelz7',
+    'url': 'mapbox://nittyjee.7x096jcj',
   });
 
   /* labels for US Major Boundaries */
   map.addLayer({
   'id': 'us_major_boundary_labels',
   'source': 'us_major_boundary_labels_src',
-  'source-layer': 'shapefile_export-4f28wr',
+  'source-layer': 'shapefile_update_2-28a1ki',
   'type': 'symbol',
   'maxzoom': 6,
   'layout': {
@@ -226,10 +227,10 @@ map.on('load', function(){
 
 
   map.addLayer({
-      'id': 'Indian_Subcontinent-abr9su',
+      'id': 'Indian_Subcontinent_Major_Bou-dpiee3',
     'source': {
       'type': 'vector',
-      'url': 'mapbox://nittyjee.2uzywtfo',
+      'url': 'mapbox://nittyjee.3qczytus',
     },
       'source-layer': 'Indian_Subcontinent_Major_Boundariesgeojson',
     'type': 'fill',
@@ -372,10 +373,10 @@ map.on('load', function(){
 
 
   map.addLayer({
-    'id': 'Indian_Subcontinent_Major_Bou-4a0c14',
+    'id': 'Indian_Subcontinent_Major_Bou-5gq491',
     'source': {
       'type': 'vector',
-      'url': 'mapbox://nittyjee.4f4v8pxo',
+      'url': 'mapbox://nittyjee.aozn7vub',
     },
     'source-layer': 'Indian_Subcontinent_Major_Boundaries_Linesgeojson',
     'type': 'line',
@@ -511,11 +512,6 @@ map.on('load', function(){
 
 
 
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//OPTION 1
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
   map.addLayer({
     'id': 'population',
     'type': 'circle',
@@ -525,7 +521,40 @@ map.on('load', function(){
     },
     'source-layer': 'shp-2lsmbo',
     'paint': {
-      'circle-radius': 4,
+//      'circle-radius': 4,
+	  
+	  			'circle-radius': {
+                property: 'pop',
+                stops: [
+                    [0, 1],
+                    [10000, 2],
+                    [50000, 3],
+                    [250000, 4],
+                    [1000000, 5],
+                    [2500000, 6],
+                    [5000000, 7],
+                    [10000000, 8],
+                    [30000000, 9]
+                ]
+				}
+
+ /*
+				'circle-color': {
+                property: 'pop',
+                stops: [
+                    [0, '#F2F12D'],
+                    [10000, '#EED322'],
+                    [50000, '#E6B71E'],
+                    [250000, '#DA9C20'],
+                    [1000000, '#CA8323'],
+                    [2500000, '#B86B25'],
+                    [5000000, '#A25626'],
+                    [10000000, '#8B4225'],
+                    [30000000, '#723122']
+                ]
+				}
+ */
+
     },
     'filter': ['all',
       ['<=', 'YearStart', yr],
@@ -533,46 +562,29 @@ map.on('load', function(){
     ]
   });
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//OPTION 2
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Trying to add a single point
+  
 /*
-
-map.addSource('population_src',{
-    'type': 'vector',
-    'url': 'mapbox://nittyjee.c9okffto',
-});
-
-map.addLayer({
-'id': 'population',
-'source': 'population_src',
-'source-layer': 'shp-2lsmbo',
-'type': 'circle',
-'maxzoom': 6,
-
-//------------------------------------------------
-        'paint': {
-            'circle-radius': 4,
-            'circle-color': '#e55e5e'
-        },
-//------------------------------------------------
-    'filter': ['all',
-      ['<=', 'YearStart', yr],
-      ['>=', 'YearEnd', yr]
-    ]
-});
-
+  
+      map.addLayer({
+		  "geojson-marker": {
+			  "type": "geojson",
+			  "data": {
+				  "type": "Feature",
+				  "geometry": {
+					  "type": "Point",
+					  "coordinates": [-77.0323, 38.9131]
+					  },
+					  "properties": {
+						  "title": "Mapbox DC",
+						  "marker-symbol": "monument"
+						  }
+						  }
+						  }
+						  });
+	
 */
-  
-  
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
 
   
   /*Map events*/
@@ -670,7 +682,8 @@ function changeDate(unixDate){
 
 
 //US Major Boundaries - lines
-  map.setFilter('US_Major_Boundaries_Lines-aceyhz', dateFilter);
+//  map.setFilter('US_Major_Boundaries_Lines-aceyhz', dateFilter);
+  map.setFilter('US_Major_Boundaries_Lines-2706lh', dateFilter);
 
 //US Major Boundaries - earlier
 //map.setFilter('us_major_boundaries', dateFilter);
@@ -679,13 +692,13 @@ function changeDate(unixDate){
 map.setFilter('US_Minor_Boundaries-1lyzcs', yrFilter);
   
 //Indian Subcontinent Major Boundaries - polygons
-map.setFilter('Indian_Subcontinent-abr9su', yrFilter);
+map.setFilter('Indian_Subcontinent_Major_Bou-dpiee3', yrFilter);
   
 //US Major Boundaries- Labels
 map.setFilter('us_major_boundary_labels', dateFilter);
 
 //Indian Subcontinent Major Boundaries - lines
-map.setFilter('Indian_Subcontinent_Major_Bou-4a0c14', yrFilter);
+map.setFilter('Indian_Subcontinent_Major_Bou-5gq491', yrFilter);
 
 //Global Settlements - points
 map.setFilter('population', yrFilter);

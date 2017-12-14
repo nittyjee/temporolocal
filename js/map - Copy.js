@@ -5,21 +5,9 @@ var map = new mapboxgl.Map({
   style: 'mapbox://styles/mapbox/light-v9',
 //  style: 'mapbox://styles/mapbox/satellite-v9',
   hash: true,
-  center: [-93.6135, 42.0256],
-  zoom: 15,
+  center: [-94, 38],
+  zoom: 4,
   pitchWithRotate: false,
-})
-
-
-map.on('load', () =>{
-    map.addLayer({
-      id: 'naturalearth',
-      source: {
-        type: 'raster',
-        tiles: ['https://a.tiles.mapbox.com/v3/mapbox.natural-earth-2/{z}/{x}/{y}@2x.png']
-      },
-      type: 'raster'
-    })
 })
 
 var nav = new mapboxgl.NavigationControl();
@@ -38,20 +26,25 @@ map.on('load', function(){
     document.location.href = 'raster-version.html' + urlHash;
   })
 
+  //Add neatural earth
+
+  map.addLayer({
+    id: 'naturalearth',
+    source: {
+      type: 'raster',
+      tiles: ['https://a.tiles.mapbox.com/v3/mapbox.natural-earth-2/{z}/{x}/{y}@2x.png']
+    },
+    type: 'raster'
+  })
   
-  
-  
-/////////////////////////////////////////////////////////////
-//Add buildings layers
-/////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////
+  //Add buildings layers
+  /////////////////////////////////////////////////////////////
 
-
-/////////////////////////////////////////////////////////////
-//Ames, IA
-//Buildings
-/////////////////////////////////////////////////////////////
-
-
+  /////////////////////////////////////////////////////////////
+  //Ames, IA
+  //Buildings
+  /////////////////////////////////////////////////////////////
   map.addLayer({
     'id': 'buildings',
     'type': 'fill',
@@ -82,14 +75,11 @@ map.on('load', function(){
       ['>=', 'YearEnd', yr]
     ]
   });
-
   
-  
-  
-/////////////////////////////////////////////////////////////
-//Netherlands
-//Buildings
-/////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////
+  //Netherlands
+  //Buildings
+  /////////////////////////////////////////////////////////////
 
   map.addLayer({
     'id': 'netherlands_buildings-6wkgma',
@@ -121,22 +111,15 @@ map.on('load', function(){
       ['>=', 'YearEnd', yr]
     ]
   });
-  
-  
 
-  
-  
-/////////////////////////////////////////////////////////////
-//Add boundaries layers
-/////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////
+  //Add boundaries layers
+  /////////////////////////////////////////////////////////////
 
-
-
-
-/////////////////////////////////////////////////////////////
-//Add Minor Boundaries Layer
-//USA
-/////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////
+  //Add Minor Boundaries Layer
+  //USA
+  /////////////////////////////////////////////////////////////
 
   map.addLayer({
     'id': 'US_Minor_Boundaries-1lyzcs',
@@ -146,41 +129,26 @@ map.on('load', function(){
     },
     'source-layer': 'US_Minor_Boundariesgeojson',
     'type': 'fill',
-	'maxzoom': 6,
-
-//-------------------------------------------
+    'maxzoom': 6,
     'paint': {
 //		'line-color': '#000000'
 		'fill-outline-color': 'rgba(0, 0, 0, 0.15)',
         'fill-color': 'rgba(0, 0, 0, 0)'
     },
-//-------------------------------------------
     'filter': ['all',
       ['<=', 'YearStart', yr],
       ['>=', 'YearEnd', yr]
     ]
-//------------------------------------------------
   });
 
+  /////////////////////////////////////////////////////////////
+  //Add Major Boundaries Layer
+  //USA
+  /////////////////////////////////////////////////////////////
 
-
-
-  
-/////////////////////////////////////////////////////////////
-//Add Major Boundaries Layer
-//USA
-/////////////////////////////////////////////////////////////
-
-
-
-
-/////////////////////////////////////////////////////////////
-//Lines
-/////////////////////////////////////////////////////////////
-
-
-///*-----------------------------------------------------------------------------------------------------
-
+  /////////////////////////////////////////////////////////////
+  //Lines
+  /////////////////////////////////////////////////////////////
 
   map.addLayer({
     'id': 'US_Major_Boundaries_Lines-aceyhz',
@@ -190,93 +158,66 @@ map.on('load', function(){
     },
     'source-layer': 'US_Major_Boundaries_Linesgeojson',
     'type': 'line',
-	'maxzoom': 6,
-	
-
-
-//------------------------------------------------
+    'maxzoom': 6,
     'paint': {
-		'line-offset': 1,
-		'line-width': 1.5,
-		'line-color': {
-          'property': 'TERR_TYPE',
-          'type': 'categorical',
-          'stops': [
-		//Bright Blue
-		['Colony', '#0000ee'],
-		//Orange
-		['Unorganized Territory', '#ff9900'],
-		//Dark Red
-		['Territory', '#cc3300'],
-		//Bright Red
-		['State', '#cd0000'],
-		//Bright Green
-		['Other', '#009933'],
-		//Black
-		['District of Columbia', '#000000'],
-          ]
-        },
-		
-
-///*-----------------------------------------------------------------------------------------------------
-		
+      'line-offset': 1,
+      'line-width': 1.5,
+      'line-color': {
+        'property': 'TERR_TYPE',
+        'type': 'categorical',
+        'stops': [
+          //Bright Blue
+          ['Colony', '#0000ee'],
+          //Orange
+          ['Unorganized Territory', '#ff9900'],
+          //Dark Red
+          ['Territory', '#cc3300'],
+          //Bright Red
+          ['State', '#cd0000'],
+          //Bright Green
+          ['Other', '#009933'],
+          //Black
+          ['District of Columbia', '#000000'],
+        ]
+      },	
     },
-
-	
-//------------------------------------------------
     'filter': ['all',
       ['<=', 'DayStart', date],
       ['>=', 'DayEnd', date]
     ]
-//------------------------------------------------
   });
   
-//-----------------------------------------------------------------------------------------------------*/
+  /////////////////////////////////////////////////////////////
+  //Add Labels Layer
+  //Major Boundaries
+  //USA
+  /////////////////////////////////////////////////////////////
 
-
-  
-
-  
-  
-/////////////////////////////////////////////////////////////
-//Add Labels Layer
-//Major Boundaries
-//USA
-/////////////////////////////////////////////////////////////
-
-map.addSource('us_major_boundary_labels_src',{
+  map.addSource('us_major_boundary_labels_src',{
     'type': 'vector',
     'url': 'mapbox://nittyjee.biuuelz7',
-});
+  });
 
-/* labels for US Major Boundaries */
-map.addLayer({
-'id': 'us_major_boundary_labels',
-'source': 'us_major_boundary_labels_src',
-'source-layer': 'shapefile_export-4f28wr',
-'type': 'symbol',
-'maxzoom': 6,
-
-//------------------------------------------------
-'layout': {
-  'text-field': '{name}',
-},
-/*
-'paint': {
-  'text-color': 'red'
-},
-*/
-
-//------------------------------------------------
-'filter': ['all',
-  ['<=', 'DayStart', date],
-  ['>=', 'DayEnd', date]
-]
-});
-  
-
-
-  
+  /* labels for US Major Boundaries */
+  map.addLayer({
+  'id': 'us_major_boundary_labels',
+  'source': 'us_major_boundary_labels_src',
+  'source-layer': 'shapefile_export-4f28wr',
+  'type': 'symbol',
+  'maxzoom': 6,
+  'layout': {
+    'text-field': '{name}',
+  },
+  /*
+  'paint': {
+    'text-color': 'red'
+  },
+  */
+  'filter': ['all',
+    ['<=', 'DayStart', date],
+    ['>=', 'DayEnd', date]
+  ]
+  });
   
 /////////////////////////////////////////////////////////////
 //Add Major Boundaries Layer
@@ -416,29 +357,12 @@ map.addLayer({
         }
     },
 	
-//------------------------------------------------
     'filter': ['all',
       ['<=', 'YearStart', yr],
       ['>=', 'YearEnd', yr]
     ]
 
   });
-  
-
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
 /////////////////////////////////////////////////////////////
 //Add Major Boundaries Layer
@@ -448,161 +372,130 @@ map.addLayer({
 
 
   map.addLayer({
-      'id': 'Indian_Subcontinent_Major_Bou-4a0c14',
+    'id': 'Indian_Subcontinent_Major_Bou-4a0c14',
     'source': {
       'type': 'vector',
       'url': 'mapbox://nittyjee.4f4v8pxo',
     },
-      'source-layer': 'Indian_Subcontinent_Major_Boundaries_Linesgeojson',
+    'source-layer': 'Indian_Subcontinent_Major_Boundaries_Linesgeojson',
     'type': 'line',
-	'maxzoom': 6,
-
-//------------------------------------------------
-
-/*
-
+    'maxzoom': 6,
     'paint': {
-//		'line-offset': 1,
-//		'line-width': 1.5,
+    //		'line-offset': 1,
+    //		'line-width': 1.5,
 		'line-color': {
-          'property': 'TYPE',
-          'type': 'categorical',
-          'stops': [
-['Afghans', 'rgba(0,0,0,1)'],
-//
-//Agency should be dashed:
-['Agency', 'rgba(0,0,0,1)'],
-//
-['Agency (Princely)', 'rgba(0,0,0,1)'],
-['Agency, British Portion', 'rgba(0,0,0,1)'],
-['ANEX_COMPLETE', 'rgba(0,0,0,1)'],
-['ANNEX_COMPLET', 'rgba(0,0,0,1)'],
-['ANNEX_COMPLETE', 'rgba(0,0,0,1)'],
-['ANNEXED_COMPLETE', 'rgba(0,0,0,1)'],
-['ANNEXED_PROTECTED', 'rgba(0,0,0,1)'],
-['ANNEXED_TWICE', 'rgba(0,0,0,1)'],
-['Autonomous Area', 'rgba(0,0,0,1)'],
-['Bangash', 'rgba(0,0,0,1)'],
-['BANGLADESH', 'rgba(0,0,0,1)'],
-['Benares', 'rgba(0,0,0,1)'],
-['Bengal', 'rgba(0,0,0,1)'],
-['British', 'rgba(0,0,0,1)'],
-['British (administration)', 'rgba(0,0,0,1)'],
-['British (direct relations)', 'rgba(0,0,0,1)'],
-['British (feudatory)', 'rgba(0,0,0,1)'],
-['British (leased)', 'rgba(0,0,0,1)'],
-['British (Partial)', 'rgba(0,0,0,1)'],
-['British (protectorate)', 'rgba(0,0,0,1)'],
-['British (Province)', 'rgba(0,0,0,1)'],
-['British (Special)', 'rgba(0,0,0,1)'],
-['British (subordinate ally)', 'rgba(0,0,0,1)'],
-['British (Temporary)', 'rgba(0,0,0,1)'],
-['British special treaty', 'rgba(0,0,0,1)'],
-//["British, Chief Commissioner's Province", 'rgba(0,0,0,1)'],
-['British, Chief Commissionership', 'rgba(0,0,0,1)'],
-['Carnatic', 'rgba(0,0,0,1)'],
-['CARNATIC', 'rgba(0,0,0,1)'],
-['CIS-SUTLEJ SIKHS', 'rgba(0,0,0,1)'],
-['Cochin', 'rgba(0,0,0,1)'],
-['COCHIN', 'rgba(0,0,0,1)'],
-//
-//Crown Colony should have black outline:
-['Crown Colony', 'rgba(0,0,0,1)'],
-//
-['Cutch', 'rgba(0,0,0,1)'],
-['CUTCH', 'rgba(0,0,0,1)'],
-['Denmark', 'rgba(0,0,0,1)'],
-['DUTCH', 'rgba(0,0,0,1)'],
-['FARRUKHABAD', 'rgba(0,0,0,1)'],
-['Feudatory State', 'rgba(0,0,0,1)'],
-['French', 'rgba(0,0,0,1)'],
-['Gorakhpur', 'rgba(0,0,0,1)'],
-['INDIA', 'rgba(0,0,0,1)'],
-['Jammu & Kashmir (Protection', 'rgba(0,0,0,1)'],
-//['Jammu & Kashmir (Protection)', 'rgba(0,0,0,1)'],
-['Jats', 'rgba(0,0,0,1)'],
-['JATS', 'rgba(0,0,0,1)'],
-['Kalhoras', 'rgba(0,0,0,1)'],
-['Lahore', 'rgba(0,0,0,1)'],
-['Lower Doab', 'rgba(0,0,0,1)'],
-['Malabar', 'rgba(0,0,0,1)'],
-['MALABAR', 'rgba(0,0,0,1)'],
-//
-//Marathas or MARATHA should not have a border:
-['MARATHA', 'rgba(0,0,0,0)'],
-//
-['Marathas', 'rgba(0,0,0,0)'],
-['Mughals', 'rgba(0,0,0,1)'],
-['MUGHALS', 'rgba(0,0,0,1)'],
-['Mysore', 'rgba(0,0,0,1)'],
-['MYSORE', 'rgba(0,0,0,1)'],
-['NEPAL', 'rgba(0,0,0,1)'],
-['Nizam', 'rgba(0,0,0,1)'],
-['NIZAM', 'rgba(0,0,0,1)'],
-['Northern Circars', 'rgba(0,0,0,1)'],
-['Oudh', 'rgba(0,0,0,1)'],
-['OUDH', 'rgba(0,0,0,1)'],
-['PAKISTAN', 'rgba(0,0,0,1)'],
-['Portuguese', 'rgba(0,0,0,1)'],
-['PORTUGUESE', 'rgba(0,0,0,1)'],
-['Portuguese India', 'rgba(0,0,0,1)'],
-//
-//Presidency should be dashed:
-['Presidency', 'rgba(0,0,0,1)'],
-//
-['Princely Area', 'rgba(0,0,0,1)'],
-['Princely_State', 'rgba(0,0,0,1)'],
-['PROTECED_COMPLETE', 'rgba(0,0,0,1)'],
-['PROTECTED', 'rgba(0,0,0,1)'],
-['PROTECTED_ANNEXED', 'rgba(0,0,0,1)'],
-['PROTECTED_COMPLETE', 'rgba(0,0,0,1)'],
-['PROTECTED_TWICE', 'rgba(0,0,0,1)'],
-//
-//Province should have black outline:
-['Province', 'rgba(0,0,0,1)'],
-//
-['Province (British)', 'rgba(0,0,0,1)'],
-['Province (Princely)', 'rgba(0,0,0,1)'],
-['Province', 'rgba(0,0,0,1)'],
-['RAJPUTANA', 'rgba(0,0,0,1)'],
-['Rajputs', 'rgba(0,0,0,1)'],
-['Rohilkhand', 'rgba(0,0,0,1)'],
-['Rohillas', 'rgba(0,0,0,1)'],
-['SAVANTVADI', 'rgba(0,0,0,1)'],
-['SINDHIA', 'rgba(0,0,0,1)'],
-['SIROHI', 'rgba(0,0,0,1)'],
-['TANJORE', 'rgba(0,0,0,1)'],
-['TRAVANCORE', 'rgba(0,0,0,1)'],
-['Unlabeled', 'rgba(0,0,0,1)'],
-['UNLABELED', 'rgba(0,0,0,1)'],
-['NULL', 'rgba(0,0,0,1)'],
-          ]
+        'property': 'TYPE',
+        'type': 'categorical',
+        'stops': [
+          ['Afghans', 'rgba(0,0,0,1)'],
+          //Agency should be dashed:
+          ['Agency', 'rgba(0,0,0,1)'],
+          ['Agency (Princely)', 'rgba(0,0,0,1)'],
+          ['Agency, British Portion', 'rgba(0,0,0,1)'],
+          ['ANEX_COMPLETE', 'rgba(0,0,0,1)'],
+          ['ANNEX_COMPLET', 'rgba(0,0,0,1)'],
+          ['ANNEX_COMPLETE', 'rgba(0,0,0,1)'],
+          ['ANNEXED_COMPLETE', 'rgba(0,0,0,1)'],
+          ['ANNEXED_PROTECTED', 'rgba(0,0,0,1)'],
+          ['ANNEXED_TWICE', 'rgba(0,0,0,1)'],
+          ['Autonomous Area', 'rgba(0,0,0,1)'],
+          ['Bangash', 'rgba(0,0,0,1)'],
+          ['BANGLADESH', 'rgba(0,0,0,1)'],
+          ['Benares', 'rgba(0,0,0,1)'],
+          ['Bengal', 'rgba(0,0,0,1)'],
+          ['British', 'rgba(0,0,0,1)'],
+          ['British (administration)', 'rgba(0,0,0,1)'],
+          ['British (direct relations)', 'rgba(0,0,0,1)'],
+          ['British (feudatory)', 'rgba(0,0,0,1)'],
+          ['British (leased)', 'rgba(0,0,0,1)'],
+          ['British (Partial)', 'rgba(0,0,0,1)'],
+          ['British (protectorate)', 'rgba(0,0,0,1)'],
+          ['British (Province)', 'rgba(0,0,0,1)'],
+          ['British (Special)', 'rgba(0,0,0,1)'],
+          ['British (subordinate ally)', 'rgba(0,0,0,1)'],
+          ['British (Temporary)', 'rgba(0,0,0,1)'],
+          ['British special treaty', 'rgba(0,0,0,1)'],
+          //["British, Chief Commissioner's Province", 'rgba(0,0,0,1)'],
+          ['British, Chief Commissionership', 'rgba(0,0,0,1)'],
+          ['Carnatic', 'rgba(0,0,0,1)'],
+          ['CARNATIC', 'rgba(0,0,0,1)'],
+          ['CIS-SUTLEJ SIKHS', 'rgba(0,0,0,1)'],
+          ['Cochin', 'rgba(0,0,0,1)'],
+          ['COCHIN', 'rgba(0,0,0,1)'],
+          //Crown Colony should have black outline:
+          ['Crown Colony', 'rgba(0,0,0,1)'],
+          ['Cutch', 'rgba(0,0,0,1)'],
+          ['CUTCH', 'rgba(0,0,0,1)'],
+          ['Denmark', 'rgba(0,0,0,1)'],
+          ['DUTCH', 'rgba(0,0,0,1)'],
+          ['FARRUKHABAD', 'rgba(0,0,0,1)'],
+          ['Feudatory State', 'rgba(0,0,0,1)'],
+          ['French', 'rgba(0,0,0,1)'],
+          ['Gorakhpur', 'rgba(0,0,0,1)'],
+          ['INDIA', 'rgba(0,0,0,1)'],
+          ['Jammu & Kashmir (Protection', 'rgba(0,0,0,1)'],
+          //['Jammu & Kashmir (Protection)', 'rgba(0,0,0,1)'],
+          ['Jats', 'rgba(0,0,0,1)'],
+          ['JATS', 'rgba(0,0,0,1)'],
+          ['Kalhoras', 'rgba(0,0,0,1)'],
+          ['Lahore', 'rgba(0,0,0,1)'],
+          ['Lower Doab', 'rgba(0,0,0,1)'],
+          ['Malabar', 'rgba(0,0,0,1)'],
+          ['MALABAR', 'rgba(0,0,0,1)'],
+          //Marathas or MARATHA should not have a border:
+          ['MARATHA', 'rgba(0,0,0,0)'],
+          ['Marathas', 'rgba(0,0,0,0)'],
+          ['Mughals', 'rgba(0,0,0,1)'],
+          ['MUGHALS', 'rgba(0,0,0,1)'],
+          ['Mysore', 'rgba(0,0,0,1)'],
+          ['MYSORE', 'rgba(0,0,0,1)'],
+          ['NEPAL', 'rgba(0,0,0,1)'],
+          ['Nizam', 'rgba(0,0,0,1)'],
+          ['NIZAM', 'rgba(0,0,0,1)'],
+          ['Northern Circars', 'rgba(0,0,0,1)'],
+          ['Oudh', 'rgba(0,0,0,1)'],
+          ['OUDH', 'rgba(0,0,0,1)'],
+          ['PAKISTAN', 'rgba(0,0,0,1)'],
+          ['Portuguese', 'rgba(0,0,0,1)'],
+          ['PORTUGUESE', 'rgba(0,0,0,1)'],
+          ['Portuguese India', 'rgba(0,0,0,1)'],
+          //Presidency should be dashed:
+          ['Presidency', 'rgba(0,0,0,1)'],
+          //
+          ['Princely Area', 'rgba(0,0,0,1)'],
+          ['Princely_State', 'rgba(0,0,0,1)'],
+          ['PROTECED_COMPLETE', 'rgba(0,0,0,1)'],
+          ['PROTECTED', 'rgba(0,0,0,1)'],
+          ['PROTECTED_ANNEXED', 'rgba(0,0,0,1)'],
+          ['PROTECTED_COMPLETE', 'rgba(0,0,0,1)'],
+          ['PROTECTED_TWICE', 'rgba(0,0,0,1)'],
+          //
+          //Province should have black outline:
+          ['Province', 'rgba(0,0,0,1)'],
+          //
+          ['Province (British)', 'rgba(0,0,0,1)'],
+          ['Province (Princely)', 'rgba(0,0,0,1)'],
+          ['RAJPUTANA', 'rgba(0,0,0,1)'],
+          ['Rajputs', 'rgba(0,0,0,1)'],
+          ['Rohilkhand', 'rgba(0,0,0,1)'],
+          ['Rohillas', 'rgba(0,0,0,1)'],
+          ['SAVANTVADI', 'rgba(0,0,0,1)'],
+          ['SINDHIA', 'rgba(0,0,0,1)'],
+          ['SIROHI', 'rgba(0,0,0,1)'],
+          ['TANJORE', 'rgba(0,0,0,1)'],
+          ['TRAVANCORE', 'rgba(0,0,0,1)'],
+          ['Unlabeled', 'rgba(0,0,0,1)'],
+          ['UNLABELED', 'rgba(0,0,0,1)'],
+          ['NULL', 'rgba(0,0,0,1)'],
+        ]
+      },
+    },
 
-		},
-        },
-
-*/
-	
-//------------------------------------------------
     'filter': ['all',
       ['<=', 'YearStart', yr],
       ['>=', 'YearEnd', yr]
     ]
-//------------------------------------------------
   });
-  
-  
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
 /////////////////////////////////////////////////////////////
 //Add Settlements Layer
@@ -617,40 +510,63 @@ map.addLayer({
 /////////////////////////////////////////////////////////////
 
 
-map.addSource('global_settlements_points',{
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//OPTION 1
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  map.addLayer({
+    'id': 'population',
+    'type': 'circle',
+    'source': {
+      type: 'vector',
+      url: 'mapbox://nittyjee.c9okffto'
+    },
+    'source-layer': 'shp-2lsmbo',
+    'paint': {
+      'circle-radius': 4,
+    },
+    'filter': ['all',
+      ['<=', 'YearStart', yr],
+      ['>=', 'YearEnd', yr]
+    ]
+  });
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//OPTION 2
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*
+
+map.addSource('population_src',{
     'type': 'vector',
     'url': 'mapbox://nittyjee.c9okffto',
 });
 
-/* labels for US Major Boundaries */
 map.addLayer({
-'id': 'global_settlements_id',
-'source': 'global_settlements_points',
-//'source-layer': 'shapefile_export-4f28wr',
+'id': 'population',
+'source': 'population_src',
 'source-layer': 'shp-2lsmbo',
-'type': 'symbol',
+'type': 'circle',
 'maxzoom': 6,
 
 //------------------------------------------------
-'layout': {
-  'symbol-placement': 'point',
-},
-/*
-'paint': {
-  'text-color': 'red'
-},
-*/
-
+        'paint': {
+            'circle-radius': 4,
+            'circle-color': '#e55e5e'
+        },
 //------------------------------------------------
-'filter': ['all',
-  ['<=', 'YearStart', yr],
-  ['>=', 'YearEnd', yr]
-]
+    'filter': ['all',
+      ['<=', 'YearStart', yr],
+      ['>=', 'YearEnd', yr]
+    ]
 });
 
-
-
-
+*/
+  
+  
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -767,21 +683,16 @@ map.setFilter('Indian_Subcontinent-abr9su', yrFilter);
   
 //US Major Boundaries- Labels
 map.setFilter('us_major_boundary_labels', dateFilter);
-}
 
-
-
-
-
-//-------------------------------------------------------------------------------------
-  
 //Indian Subcontinent Major Boundaries - lines
-  map.setFilter('Indian_Subcontinent_Major_Bou-4a0c14', yrFilter);
-  
+map.setFilter('Indian_Subcontinent_Major_Bou-4a0c14', yrFilter);
+
 //Global Settlements - points
-  map.setFilter('global_settlements_id', yrFilter);
-  
-//-------------------------------------------------------------------------------------
+map.setFilter('population', yrFilter);
+
+
+}  //end map load
+
 
 
 
