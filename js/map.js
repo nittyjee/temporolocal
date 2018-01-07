@@ -728,55 +728,32 @@ var toggleableLayerIds = [
 var legend = document.getElementById("legend");
 
 for (var i = 0; i < toggleableLayerIds.length; i++) {
-  var id = toggleableLayerIds[i];
+  //use closure to deal with scoping
+  (function() {
+    var id = toggleableLayerIds[i];
 
-  // Add checkbox and label elements for the layer.
-  var input = document.createElement("input");
-  input.type = "checkbox";
-  input.id = id;
-  input.checked = true;
-  // legend.appendChild(input);
+    // Add checkbox and label elements for the layer.
+    var input = document.createElement("input");
+    input.type = "checkbox";
+    input.id = id;
+    input.checked = true;
 
-  var label = document.createElement("label");
-  label.setAttribute("for", id);
-  label.textContent = id;
-  // legend.appendChild(label);
+    var label = document.createElement("label");
+    label.setAttribute("for", id);
+    label.textContent = id;
 
-  // When the checkbox changes, update the visibility of the layer.
-  input.addEventListener("change", function(e) {
-    map.setLayoutProperty(
-      id,
-      "visibility",
-      e.target.checked ? "visible" : "none"
-    );
-  });
+    // When the checkbox changes, update the visibility of the layer.
+    input.addEventListener("change", function(e) {
+      map.setLayoutProperty(
+        id,
+        "visibility",
+        e.target.checked ? "visible" : "none"
+      );
+    });
 
-  var layers = document.getElementById("legend");
-  layers.appendChild(input);
-  layers.appendChild(label);
-  layers.appendChild(document.createElement("br"));
-
-  // var link = document.createElement("a");
-  // link.href = "#";
-  // link.className = "active";
-  // link.textContent = id;
-
-  // link.onclick = function(e) {
-  //   var clickedLayer = this.textContent;
-  //   e.preventDefault();
-  //   e.stopPropagation();
-
-  //   var visibility = map.getLayoutProperty(clickedLayer, "visibility");
-
-  //   if (visibility === "visible") {
-  //     map.setLayoutProperty(clickedLayer, "visibility", "none");
-  //     this.className = "";
-  //   } else {
-  //     this.className = "active";
-  //     map.setLayoutProperty(clickedLayer, "visibility", "visible");
-  //   }
-  // };
-
-  // var layers = document.getElementById("legend");
-  // layers.appendChild(link);
+    var layers = document.getElementById("legend");
+    layers.appendChild(input);
+    layers.appendChild(label);
+    layers.appendChild(document.createElement("br"));
+  })();
 }
