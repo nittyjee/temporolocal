@@ -189,6 +189,15 @@ h1 {
   font-size: 12px; */
 }
 
+#styleSwitcher {
+  left: 50px;
+  position: absolute;
+  background: #fff;
+  padding: 10px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+
 /* #legend a {
   font-size: 13px;
   color: #404040;
