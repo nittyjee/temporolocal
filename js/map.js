@@ -3,8 +3,7 @@ mapboxgl.accessToken =
 
 var map = new mapboxgl.Map({
   container: "map",
-  style: "mapbox://styles/mapbox/light-v9",
-  //  style: 'mapbox://styles/mapbox/satellite-v9',
+  style: "mapbox://styles/mapbox/basic-v9",
   hash: true,
   center: [-94, 38],
   zoom: 4,
@@ -17,28 +16,258 @@ map.addControl(nav, "top-left");
 urlHash = window.location.hash;
 
 map.on("load", function() {
+  console.log("load");
   var sliderVal = $("#date").val();
-  // var yr = parseInt($('#date').val());
   var yr = parseInt(moment.unix(sliderVal).format("YYYY"));
-
   var date = parseInt(moment.unix(sliderVal).format("YYYYMMDD"));
 
   $("#linkButton").on("click", function() {
     document.location.href = "raster-version.html" + urlHash;
   });
 
-  //Add neatural earth
-
-  map.addLayer({
-    id: "naturalearth",
-    source: {
-      type: "raster",
-      tiles: [
-        "https://a.tiles.mapbox.com/v3/mapbox.natural-earth-2/{z}/{x}/{y}@2x.png"
-      ]
-    },
-    type: "raster"
+  /* add layers */
+  //moved this to a separate function to clean things up - have to pass yr and date for filtering to work
+  //latest: moved addLayers to fire on "style.load" event rather than "load" for quick implementation of "basemap" switching
+  // addLayers(yr, date);
+  
+  /*Map events*/
+  map.on("click", "buildings", function(e) {
+    new mapboxgl.Popup()
+      .setLngLat(e.lngLat)
+      .setHTML(
+        "<b>Year Built:</b>" +
+          e.features[0].properties.YearStart +
+          "<br>" +
+          "<b>Year Demolished:</b>" +
+          e.features[0].properties.YearEnd
+      )
+      .addTo(map);
   });
+
+  map.on("mouseenter", "buildings", function() {
+    map.getCanvas().style.cursor = "pointer";
+  });
+
+  map.on("mouseleave", "buildings", function() {
+    map.getCanvas().style.cursor = "";
+  });
+
+  map.on("moveend", function() {
+    urlHash = window.location.hash + "/" + $("#year").val();
+    // document.location.href = 'raster-version.html' + urlHash;
+    // console.log(document.location.href)
+    console.log(urlHash);
+  });
+
+}); //end map.on("load")
+
+
+map.on("error", function(e) {
+  // Hide those annoying non-error errors
+  if (e && e.error !== "Error") console.log(e);
+});
+
+function changeDate(unixDate) {
+  var year = parseInt(moment.unix(unixDate).format("YYYY"));
+  var date = parseInt(moment.unix(unixDate).format("YYYYMMDD"));
+
+  var sv = $("#year");
+  if (year < 1700) {
+    sv
+      .removeClass("y1700")
+      .removeClass("y1800")
+      .removeClass("y1850")
+      .removeClass("y1900")
+      .removeClass("y1950")
+      .removeClass("y2000")
+      .addClass("y1600");
+  }
+  if (year >= 1700 && year < 1800) {
+    sv
+      .removeClass("y1600")
+      .removeClass("y1800")
+      .removeClass("y1850")
+      .removeClass("y1900")
+      .removeClass("y1950")
+      .removeClass("y2000")
+      .addClass("y1700");
+  }
+  if (year >= 1800 && year < 1850) {
+    sv
+      .removeClass("y1700")
+      .removeClass("y1600")
+      .removeClass("y1850")
+      .removeClass("y1900")
+      .removeClass("y1950")
+      .removeClass("y2000")
+      .addClass("y1800");
+  }
+  if (year >= 1850 && year < 1900) {
+    sv
+      .removeClass("y1700")
+      .removeClass("y1800")
+      .removeClass("y1600")
+      .removeClass("y1900")
+      .removeClass("y1950")
+      .removeClass("y2000")
+      .addClass("y1850");
+  }
+  if (year >= 1900 && year < 1950) {
+    sv
+      .removeClass("y1700")
+      .removeClass("y1800")
+      .removeClass("y1850")
+      .removeClass("y1600")
+      .removeClass("y1950")
+      .removeClass("y2000")
+      .addClass("y1900");
+  }
+  if (year >= 1950 && year < 2000) {
+    sv
+      .removeClass("y1700")
+      .removeClass("y1800")
+      .removeClass("y1850")
+      .removeClass("y1900")
+      .removeClass("y1600")
+      .removeClass("y2000")
+      .addClass("y1950");
+  }
+  if (year >= 2000) {
+    sv
+      .removeClass("y1700")
+      .removeClass("y1800")
+      .removeClass("y1850")
+      .removeClass("y1900")
+      .removeClass("y1950")
+      .removeClass("y1600")
+      .addClass("y2000");
+  }
+
+  var yrFilter = ["all", ["<=", "YearStart", year], [">=", "YearEnd", year]];
+
+  var dateFilter = ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]];
+
+  //Ames Buildings
+  map.setFilter("buildings", yrFilter);
+
+  //Netherlands Buildings
+  map.setFilter("netherlands_buildings-6wkgma", yrFilter);
+
+  //US State Boundaries
+  //  map.setFilter('US_State_Boundaries-7edz8s', yrFilter);
+
+  //US Major Boundaries - polygons
+  //  map.setFilter('Major_Boundaries-4abmlj', yrFilter);
+
+  //US Major Boundaries - lines
+  //  map.setFilter('US_Major_Boundaries_Lines-aceyhz', dateFilter);
+  map.setFilter("US_Major_Boundaries_Lines-2706lh", dateFilter);
+
+  //US Major Boundaries - earlier
+  //map.setFilter('us_major_boundaries', dateFilter);
+
+  //US Minor Boundaries - polygons
+  map.setFilter("US_Minor_Boundaries-1lyzcs", yrFilter);
+
+  //Indian Subcontinent Major Boundaries - polygons
+  map.setFilter("Indian_Subcontinent_Major_Bou-dpiee3", yrFilter);
+
+  //US Major Boundaries- Labels
+  map.setFilter("us_major_boundary_labels", dateFilter);
+
+  //Indian Subcontinent Major Boundaries - lines
+  map.setFilter("Indian_Subcontinent_Major_Bou-5gq491", yrFilter);
+
+  //Global Settlements - points
+  map.setFilter("population", yrFilter);
+} //end function changeDate
+
+/* CODE FOR LAYER LIST/LEGEND */
+var toggleableLayerIds = [
+  "buildings",
+  "netherlands_buildings-6wkgma",
+  "US_Major_Boundaries_Lines-2706lh",
+  "US_Minor_Boundaries-1lyzcs",
+  "Indian_Subcontinent_Major_Bou-dpiee3",
+  "us_major_boundary_labels",
+  "Indian_Subcontinent_Major_Bou-5gq491",
+  "population"
+];
+
+var legend = document.getElementById("legend");
+
+for (var i = 0; i < toggleableLayerIds.length; i++) {
+  //use closure to deal with scoping
+  (function() {
+    var id = toggleableLayerIds[i];
+
+    // Add checkbox and label elements for the layer.
+    var input = document.createElement("input");
+    input.type = "checkbox";
+    input.id = id;
+    input.checked = true;
+
+    var label = document.createElement("label");
+    label.setAttribute("for", id);
+    label.textContent = id;
+
+    // When the checkbox changes, update the visibility of the layer.
+    input.addEventListener("change", function(e) {
+      map.setLayoutProperty(
+        id,
+        "visibility",
+        e.target.checked ? "visible" : "none"
+      );
+    });
+
+    var layers = document.getElementById("legend");
+    layers.appendChild(input);
+    layers.appendChild(label);
+    layers.appendChild(document.createElement("br"));
+  })();
+}
+
+
+
+/* "Basemap switcher code" */
+map.on('style.load', function() {
+  //on the 'style.load' event, switch "basemaps" and then re-add layers
+  //this is necessary because basemaps aren't a concept in Mapbox, all layers are added via the same primitives
+  console.log("style change")
+  switchStyle();
+  var sliderVal = $("#date").val();
+  var yr = parseInt(moment.unix(sliderVal).format("YYYY"));
+  var date = parseInt(moment.unix(sliderVal).format("YYYYMMDD"));
+  addLayers(yr, date);
+});
+
+
+function switchStyle() {
+  var basemaps = document.getElementById('styleSwitcher');
+  var inputs = basemaps.getElementsByTagName('input');
+
+  function switchLayer(layer) {
+    var layerId = layer.target.id;
+    map.setStyle('mapbox://styles/mapbox/' + layerId + '-v9');
+  }
+
+  for (var i = 0; i < inputs.length; i++) {
+    inputs[i].onclick = switchLayer;
+  }
+}
+
+function addLayers(yr, date) {
+   //Commenting out natural earth raster layer to use Mapbox "outdoor" style option instead
+  // map.addLayer({
+  //   id: "naturalearth",
+  //   source: {
+  //     type: "raster",
+  //     tiles: [
+  //       "https://a.tiles.mapbox.com/v3/mapbox.natural-earth-2/{z}/{x}/{y}@2x.png"
+  //     ]
+  //   },
+  //   type: "raster"
+  // });
 
   /////////////////////////////////////////////////////////////
   //Add buildings layers
@@ -531,229 +760,4 @@ map.on("load", function() {
     },
     filter: ["all", ["<=", "YearStart", yr], [">=", "YearEnd", yr]]
   });
-
-  // Trying to add a single point
-
-  /*
-  
-      map.addLayer({
-		  "geojson-marker": {
-			  "type": "geojson",
-			  "data": {
-				  "type": "Feature",
-				  "geometry": {
-					  "type": "Point",
-					  "coordinates": [-77.0323, 38.9131]
-					  },
-					  "properties": {
-						  "title": "Mapbox DC",
-						  "marker-symbol": "monument"
-						  }
-						  }
-						  }
-						  });
-	
-*/
-
-  /*Map events*/
-  map.on("click", "buildings", function(e) {
-    new mapboxgl.Popup()
-      .setLngLat(e.lngLat)
-      .setHTML(
-        "<b>Year Built:</b>" +
-          e.features[0].properties.YearStart +
-          "<br>" +
-          "<b>Year Demolished:</b>" +
-          e.features[0].properties.YearEnd
-      )
-      .addTo(map);
-  });
-
-  map.on("mouseenter", "buildings", function() {
-    map.getCanvas().style.cursor = "pointer";
-  });
-
-  map.on("mouseleave", "buildings", function() {
-    map.getCanvas().style.cursor = "";
-  });
-
-  map.on("moveend", function() {
-    urlHash = window.location.hash + "/" + $("#year").val();
-    // document.location.href = 'raster-version.html' + urlHash;
-    // console.log(document.location.href)
-    console.log(urlHash);
-  });
-});
-
-map.on("error", function(e) {
-  // Hide those annoying non-error errors
-  if (e && e.error !== "Error") console.log(e);
-});
-
-function changeDate(unixDate) {
-  var year = parseInt(moment.unix(unixDate).format("YYYY"));
-  var date = parseInt(moment.unix(unixDate).format("YYYYMMDD"));
-
-  var sv = $("#year");
-  if (year < 1700) {
-    sv
-      .removeClass("y1700")
-      .removeClass("y1800")
-      .removeClass("y1850")
-      .removeClass("y1900")
-      .removeClass("y1950")
-      .removeClass("y2000")
-      .addClass("y1600");
-  }
-  if (year >= 1700 && year < 1800) {
-    sv
-      .removeClass("y1600")
-      .removeClass("y1800")
-      .removeClass("y1850")
-      .removeClass("y1900")
-      .removeClass("y1950")
-      .removeClass("y2000")
-      .addClass("y1700");
-  }
-  if (year >= 1800 && year < 1850) {
-    sv
-      .removeClass("y1700")
-      .removeClass("y1600")
-      .removeClass("y1850")
-      .removeClass("y1900")
-      .removeClass("y1950")
-      .removeClass("y2000")
-      .addClass("y1800");
-  }
-  if (year >= 1850 && year < 1900) {
-    sv
-      .removeClass("y1700")
-      .removeClass("y1800")
-      .removeClass("y1600")
-      .removeClass("y1900")
-      .removeClass("y1950")
-      .removeClass("y2000")
-      .addClass("y1850");
-  }
-  if (year >= 1900 && year < 1950) {
-    sv
-      .removeClass("y1700")
-      .removeClass("y1800")
-      .removeClass("y1850")
-      .removeClass("y1600")
-      .removeClass("y1950")
-      .removeClass("y2000")
-      .addClass("y1900");
-  }
-  if (year >= 1950 && year < 2000) {
-    sv
-      .removeClass("y1700")
-      .removeClass("y1800")
-      .removeClass("y1850")
-      .removeClass("y1900")
-      .removeClass("y1600")
-      .removeClass("y2000")
-      .addClass("y1950");
-  }
-  if (year >= 2000) {
-    sv
-      .removeClass("y1700")
-      .removeClass("y1800")
-      .removeClass("y1850")
-      .removeClass("y1900")
-      .removeClass("y1950")
-      .removeClass("y1600")
-      .addClass("y2000");
-  }
-
-  var yrFilter = ["all", ["<=", "YearStart", year], [">=", "YearEnd", year]];
-
-  var dateFilter = ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]];
-
-  /*
-  var dateFilter = ['all',
-    ['<=', 'start_n', date],
-    ['>=', 'end_n', date]
-  ];
-  
-*/
-
-  //Ames Buildings
-  map.setFilter("buildings", yrFilter);
-
-  //Netherlands Buildings
-  map.setFilter("netherlands_buildings-6wkgma", yrFilter);
-
-  //US State Boundaries
-  //  map.setFilter('US_State_Boundaries-7edz8s', yrFilter);
-
-  //US Major Boundaries - polygons
-  //  map.setFilter('Major_Boundaries-4abmlj', yrFilter);
-
-  //US Major Boundaries - lines
-  //  map.setFilter('US_Major_Boundaries_Lines-aceyhz', dateFilter);
-  map.setFilter("US_Major_Boundaries_Lines-2706lh", dateFilter);
-
-  //US Major Boundaries - earlier
-  //map.setFilter('us_major_boundaries', dateFilter);
-
-  //US Minor Boundaries - polygons
-  map.setFilter("US_Minor_Boundaries-1lyzcs", yrFilter);
-
-  //Indian Subcontinent Major Boundaries - polygons
-  map.setFilter("Indian_Subcontinent_Major_Bou-dpiee3", yrFilter);
-
-  //US Major Boundaries- Labels
-  map.setFilter("us_major_boundary_labels", dateFilter);
-
-  //Indian Subcontinent Major Boundaries - lines
-  map.setFilter("Indian_Subcontinent_Major_Bou-5gq491", yrFilter);
-
-  //Global Settlements - points
-  map.setFilter("population", yrFilter);
-} //end map load
-
-/* CODE FOR LAYER LIST/LEGEND */
-var toggleableLayerIds = [
-  "buildings",
-  "netherlands_buildings-6wkgma",
-  "US_Major_Boundaries_Lines-2706lh",
-  "US_Minor_Boundaries-1lyzcs",
-  "Indian_Subcontinent_Major_Bou-dpiee3",
-  "us_major_boundary_labels",
-  "Indian_Subcontinent_Major_Bou-5gq491",
-  "population"
-];
-
-var legend = document.getElementById("legend");
-
-for (var i = 0; i < toggleableLayerIds.length; i++) {
-  //use closure to deal with scoping
-  (function() {
-    var id = toggleableLayerIds[i];
-
-    // Add checkbox and label elements for the layer.
-    var input = document.createElement("input");
-    input.type = "checkbox";
-    input.id = id;
-    input.checked = true;
-
-    var label = document.createElement("label");
-    label.setAttribute("for", id);
-    label.textContent = id;
-
-    // When the checkbox changes, update the visibility of the layer.
-    input.addEventListener("change", function(e) {
-      map.setLayoutProperty(
-        id,
-        "visibility",
-        e.target.checked ? "visible" : "none"
-      );
-    });
-
-    var layers = document.getElementById("legend");
-    layers.appendChild(input);
-    layers.appendChild(label);
-    layers.appendChild(document.createElement("br"));
-  })();
 }
