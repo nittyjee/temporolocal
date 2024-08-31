@@ -1,9 +1,14 @@
+
+//////////////////////////////////////////////////
+//{ START.                                               minimize here.
+//////////////////////////////////////////////////
+
 mapboxgl.accessToken =
   "pk.eyJ1Ijoibml0dHlqZWUiLCJhIjoiY20waDRsYWVmMDdoMDJscTRmMTB1NWJhdCJ9.Y9Y5qPNB5bviltf6cVG1uA";
 
 var map = new mapboxgl.Map({
   container: "map",
-  style: "mapbox://styles/mapbox/basic-v9",
+  style: "mapbox://styles/nittyjee/cjg705tp9c5xw2rlhsukbq0bs",
   hash: true,
   center: [-94, 38],
   zoom: 4,
@@ -29,8 +34,50 @@ map.on("load", function() {
   //moved this to a separate function to clean things up - have to pass yr and date for filtering to work
   //latest: moved addLayers to fire on "style.load" event rather than "load" for quick implementation of "basemap" switching
   // addLayers(yr, date);
-  
+
   /*Map events*/
+
+
+  
+//Why does this section require 2 ends below?
+//}
+//}
+//////////////////////////////////////////////////
+
+
+
+
+
+//////////////////////////////////////////////////
+//{CLICKING FEATURES, AND SOME LINES IN BETWEEN          minimize here.
+//////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//{AMES BUILDINGS
+
+
   map.on("click", "buildings", function(e) {
     new mapboxgl.Popup()
       .setLngLat(e.lngLat)
@@ -59,13 +106,305 @@ map.on("load", function() {
     console.log(urlHash);
   });
 
+//}
+
+
+
+//{AMES Downtown Businesses
+
+/*
+downtown_businesses_1-08ux1u
+nittyjee.2oyoltlf
+downtown_businesses_1
+*/
+
+
+  map.on("click", "downtown_businesses_1-08ux1u", function(e) {
+    new mapboxgl.Popup()
+      .setLngLat(e.lngLat)
+      .setHTML(
+        "<b>Address: </b>" +
+          e.features[0].properties.num_street +
+          "<br>" +
+          "<b>Occupants: </b>" +
+          e.features[0].properties.Name +
+          "<br>" +
+          "<b>Years: </b>" +
+          e.features[0].properties.YearStart +
+//		  "<br>" +
+          "-" +
+		  e.features[0].properties.YearEnd
+      )
+      .addTo(map);
+  });
+
+  map.on("mouseenter", "downtown_businesses_1-08ux1u", function() {
+    map.getCanvas().style.cursor = "pointer";
+  });
+
+  map.on("mouseleave", "downtown_businesses_1-08ux1u", function() {
+    map.getCanvas().style.cursor = "";
+  });
+
+  map.on("moveend", function() {
+    urlHash = window.location.hash + "/" + $("#year").val();
+    // document.location.href = 'raster-version.html' + urlHash;
+    // console.log(document.location.href)
+    console.log(urlHash);
+  });
+
+//}
+
+
+
+
+
+
+
+
+
+
+
+//{NYC PARCELS AND SOME LINES IN BETWEEN
+
+//{ NYC PARCELS (1)
+
+  //{MANHATTAN PARCELS
+
+
+    map.on("click", "manhattan_parcels_03-9qwzuf", function(e) {
+    new mapboxgl.Popup()
+      .setLngLat(e.lngLat)
+      .setHTML(
+
+	  /*
+            "<b>Address:</b>" +
+            e.features[0].properties.Address +
+
+            "<br>" +
+
+            "<b>Owner:</b>" +
+            e.features[0].properties.OwnerName +
+
+            "<br>" +
+
+            "<b>Total Value:</b>" +
+            e.features[0].properties.AssessTot +
+
+            "<br>" +
+
+            "<b>Total Land Value:</b>" +
+            e.features[0].properties.AssessLand +
+
+            "<br>" +
+
+            "<b>Date1 (temp):</b>" +
+            e.features[0].properties.DayStart +
+
+            "<br>" +
+
+            "<b>Date2 (temp):</b>" +
+            e.features[0].properties.DayEnd
+
+            "<br>" +
+*/
+
+        "<b>Year Built:</b>" +
+            e.features[0].properties.YearBuilt
+
+      )
+      .addTo(map);
+  });
+
+  map.on("mouseenter", "manhattan_parcels_03-9qwzuf", function() {
+    map.getCanvas().style.cursor = "pointer";
+  });
+
+  map.on("mouseleave", "manhattan_parcels_03-9qwzuf", function() {
+    map.getCanvas().style.cursor = "";
+  });
+
+  map.on("moveend", function() {
+    urlHash = window.location.hash + "/" + $("#year").val();
+    // document.location.href = 'raster-version.html' + urlHash;
+    // console.log(document.location.href)
+    console.log(urlHash);
+  });
+
+  
+
+//}
+  //}
+
+/////////////////////{SOME LINES IN BETWEEN
+
+
+//{ENCLOSING PART OF START BEFORE CLICKING LAYERS
 }); //end map.on("load")
 
 
+//{ADDITIONAL LINE
 map.on("error", function(e) {
   // Hide those annoying non-error errors
   if (e && e.error !== "Error") console.log(e);
 });
+
+
+//}
+
+//}
+
+//{ NYC PARCELS (2)
+  
+
+  //{BROOKLYN PARCELS
+
+
+  map.on("click", "brooklyn_parcels_03-7y3mp4", function(e) {
+    new mapboxgl.Popup()
+      .setLngLat(e.lngLat)
+      .setHTML(
+
+        "<b>Year Built:</b>" +
+            e.features[0].properties.YearBuilt
+
+      )
+      .addTo(map);
+  });
+
+  map.on("mouseenter", "brooklyn_parcels_03-7y3mp4", function() {
+    map.getCanvas().style.cursor = "pointer";
+  });
+
+  map.on("mouseleave", "brooklyn_parcels_03-7y3mp4", function() {
+    map.getCanvas().style.cursor = "";
+  });
+
+  map.on("moveend", function() {
+    urlHash = window.location.hash + "/" + $("#year").val();
+    // document.location.href = 'raster-version.html' + urlHash;
+    // console.log(document.location.href)
+    console.log(urlHash);
+  });
+
+
+  //}
+  
+  
+  //{QUEENS PARCELS
+
+
+  map.on("click", "queens_parcels_03-cihsme", function(e) {
+    new mapboxgl.Popup()
+      .setLngLat(e.lngLat)
+      .setHTML(
+
+        "<b>Year Built:</b>" +
+            e.features[0].properties.YearBuilt
+
+      )
+      .addTo(map);
+  });
+
+  map.on("mouseenter", "queens_parcels_03-cihsme", function() {
+    map.getCanvas().style.cursor = "pointer";
+  });
+
+  map.on("mouseleave", "queens_parcels_03-cihsme", function() {
+    map.getCanvas().style.cursor = "";
+  });
+
+  map.on("moveend", function() {
+    urlHash = window.location.hash + "/" + $("#year").val();
+    // document.location.href = 'raster-version.html' + urlHash;
+    // console.log(document.location.href)
+    console.log(urlHash);
+  });
+
+  //}
+
+
+  //{BRONX PARCELS
+
+  map.on("click", "bronx_parcels_03-4jgu91", function(e) {
+    new mapboxgl.Popup()
+      .setLngLat(e.lngLat)
+      .setHTML(
+
+        "<b>Year Built:</b>" +
+            e.features[0].properties.YearBuilt
+
+      )
+      .addTo(map);
+  });
+
+  map.on("mouseenter", "bronx_parcels_03-4jgu91", function() {
+    map.getCanvas().style.cursor = "pointer";
+  });
+
+  map.on("mouseleave", "bronx_parcels_03-4jgu91", function() {
+    map.getCanvas().style.cursor = "";
+  });
+
+  map.on("moveend", function() {
+    urlHash = window.location.hash + "/" + $("#year").val();
+    // document.location.href = 'raster-version.html' + urlHash;
+    // console.log(document.location.href)
+    console.log(urlHash);
+  });
+
+  //}
+
+  
+  //{STATEN ISLAND PARCELS
+
+
+  map.on("click", "staten_island_parcels_03-1o8j1i", function(e) {
+    new mapboxgl.Popup()
+      .setLngLat(e.lngLat)
+      .setHTML(
+
+        "<b>Year Built:</b>" +
+            e.features[0].properties.YearBuilt
+
+      )
+      .addTo(map);
+  });
+
+  map.on("mouseenter", "staten_island_parcels_03-1o8j1i", function() {
+    map.getCanvas().style.cursor = "pointer";
+  });
+
+  map.on("mouseleave", "staten_island_parcels_03-1o8j1i", function() {
+    map.getCanvas().style.cursor = "";
+  });
+
+  map.on("moveend", function() {
+    urlHash = window.location.hash + "/" + $("#year").val();
+    // document.location.href = 'raster-version.html' + urlHash;
+    // console.log(document.location.href)
+    console.log(urlHash);
+  });
+  
+  
+//}
+
+
+  //}
+
+
+//}
+  
+
+//}
+//////////////////////////////////////////////////
+
+
+
+
+
+//////////////////////////////////////////////////
+//{ LAYER FILTERING                                      minimize here.
 
 function changeDate(unixDate) {
   var year = parseInt(moment.unix(unixDate).format("YYYY"));
@@ -143,28 +482,51 @@ function changeDate(unixDate) {
       .addClass("y2000");
   }
 
+//}
+  
   var yrFilter = ["all", ["<=", "YearStart", year], [">=", "YearEnd", year]];
 
   var dateFilter = ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]];
+  
+//}
+//////////////////////////////////////////////////
+
+
+
+
+
+
+//////////////////////////////////////////////////
+//{FILTERING FOR LAYERS                                  minimize here.
+//////////////////////////////////////////////////
+
 
   //Ames Buildings
   map.setFilter("buildings", yrFilter);
+  
+
+
+  //Ames Downtown Businesses
+  map.setFilter("downtown_businesses_1-08ux1u", yrFilter);
+
+
+  //Ames Downtown Businesses
+  map.setFilter("downtown_street_sections-b9rw6c", yrFilter);
+
+  
 
   //Netherlands Buildings
   map.setFilter("netherlands_buildings-6wkgma", yrFilter);
-
-  //US State Boundaries
-  //  map.setFilter('US_State_Boundaries-7edz8s', yrFilter);
-
+  
   //US Major Boundaries - polygons
   //  map.setFilter('Major_Boundaries-4abmlj', yrFilter);
 
   //US Major Boundaries - lines
-  //  map.setFilter('US_Major_Boundaries_Lines-aceyhz', dateFilter);
   map.setFilter("US_Major_Boundaries_Lines-2706lh", dateFilter);
-
-  //US Major Boundaries - earlier
-  //map.setFilter('us_major_boundaries', dateFilter);
+  
+  
+  //US Major Boundaries Labels
+  map.setFilter("us_major_boundary_labels", dateFilter);
 
   //US Minor Boundaries - polygons
   map.setFilter("US_Minor_Boundaries-1lyzcs", yrFilter);
@@ -172,60 +534,141 @@ function changeDate(unixDate) {
   //Indian Subcontinent Major Boundaries - polygons
   map.setFilter("Indian_Subcontinent_Major_Bou-dpiee3", yrFilter);
 
-  //US Major Boundaries- Labels
-  map.setFilter("us_major_boundary_labels", dateFilter);
-
   //Indian Subcontinent Major Boundaries - lines
   map.setFilter("Indian_Subcontinent_Major_Bou-5gq491", yrFilter);
 
+/*
   //Global Settlements - points
   map.setFilter("population", yrFilter);
-} //end function changeDate
+*/
 
-/* CODE FOR LAYER LIST/LEGEND */
-var toggleableLayerIds = [
-  "buildings",
-  "netherlands_buildings-6wkgma",
-  "US_Major_Boundaries_Lines-2706lh",
-  "US_Minor_Boundaries-1lyzcs",
-  "Indian_Subcontinent_Major_Bou-dpiee3",
-  "us_major_boundary_labels",
-  "Indian_Subcontinent_Major_Bou-5gq491",
-  "population"
-];
+  //NYC MUNICIPALITIES, FILLS
+//  map.setFilter("NYC_Municipalities-1ytq8a", dateFilter);
 
-var legend = document.getElementById("legend");
+  //NYC MUNICIPALITIES, LINES
+  map.setFilter("nyc_municipalities_lines-cztvls", dateFilter);
 
-for (var i = 0; i < toggleableLayerIds.length; i++) {
-  //use closure to deal with scoping
-  (function() {
-    var id = toggleableLayerIds[i];
+  //NYC MUNICIPALITIES LABELS
+    map.setFilter("labels_shapefile-70j5np", dateFilter);
 
-    // Add checkbox and label elements for the layer.
-    var input = document.createElement("input");
-    input.type = "checkbox";
-    input.id = id;
-    input.checked = true;
 
-    var label = document.createElement("label");
-    label.setAttribute("for", id);
-    label.textContent = id;
 
-    // When the checkbox changes, update the visibility of the layer.
-    input.addEventListener("change", function(e) {
-      map.setLayoutProperty(
-        id,
-        "visibility",
-        e.target.checked ? "visible" : "none"
-      );
-    });
+  //NYC PARCELS
 
-    var layers = document.getElementById("legend");
-    layers.appendChild(input);
-    layers.appendChild(label);
-    layers.appendChild(document.createElement("br"));
-  })();
+  //MANHATTAN NYC PARCELS
+//    map.setFilter("manhattan_parcels_03-cs4an8", dateFilter);
+    map.setFilter("manhattan_parcels_03-9qwzuf", dateFilter);
+
+  //BROOKLYN NYC PARCELS
+    map.setFilter("brooklyn_parcels_03-7y3mp4", dateFilter);
+
+  //QUEENS NYC PARCELS
+    map.setFilter("queens_parcels_03-cihsme", dateFilter);
+
+  //BRONX NYC PARCELS
+    map.setFilter("bronx_parcels_03-4jgu91", dateFilter);
+
+  //STATEN ISLAND NYC PARCELS
+    map.setFilter("staten_island_parcels_03-1o8j1i", dateFilter);
+
+
+
+	  //Places LABELS
+  map.setFilter("global_labels", yrFilter);
+
+  /////////////////////////////////////////////////////////////
+  //Bulk Layers
+  /////////////////////////////////////////////////////////////
+
+  /*
+  Chicago_Buildings-dg5b3w
+  Chicago_Buildings
+  nittyjee.a3jtdrwh
+
+
+  */
+
+  /////////////////////////////////////////////////////////////
+  //Chicago, Illinois
+  //Buildings
+  /////////////////////////////////////////////////////////////
+
+  //CHICAGO BUILDINGS
+    map.setFilter("Chicago_Buildings-dg5b3w", dateFilter);
+	
+	
+//}
+//////////////////////////////////////////////////
+
+  
+
+
+ 
+//////////////////////////////////////////////////
+//LAYER FILTERING END
+}//end function changeDate
+//////////////////////////////////////////////////
+
+
+
+
+
+
+//////////////////////////////////////////////////
+//{ LEGEND, BASEMAPS                                     minimize here.
+
+
+function setLayers() {
+
+  var toggleableLayerIds = [
+    "buildings",
+    "netherlands_buildings-6wkgma",
+    "US_Major_Boundaries_Lines-2706lh",
+    "US_Minor_Boundaries-1lyzcs",
+    "Indian_Subcontinent_Major_Bou-dpiee3",
+    "us_major_boundary_labels",
+    "Indian_Subcontinent_Major_Bou-5gq491",
+  //  "nyc_municipalities_lines-catd44",
+    "population"
+  ];
+
+  var legend = document.getElementById("legend");
+  while (legend.hasChildNodes()) {
+    legend.removeChild(legend.lastChild);
+  }
+  for (var i = 0; i < toggleableLayerIds.length; i++) {
+    //use closure to deal with scoping
+    (function() {
+      var id = toggleableLayerIds[i];
+
+      // Add checkbox and label elements for the layer.
+      var input = document.createElement("input");
+      input.type = "checkbox";
+      input.id = id;
+      input.checked = true;
+
+      var label = document.createElement("label");
+      label.setAttribute("for", id);
+      label.textContent = id;
+
+      // When the checkbox changes, update the visibility of the layer.
+      input.addEventListener("change", function(e) {
+        map.setLayoutProperty(
+          id,
+          "visibility",
+          e.target.checked ? "visible" : "none"
+        );
+      });
+
+      var layers = document.getElementById("legend");
+      layers.appendChild(input);
+      layers.appendChild(label);
+      layers.appendChild(document.createElement("br"));
+    })();
+  }
+
 }
+
 
 
 
@@ -238,6 +681,10 @@ map.on('style.load', function() {
   var sliderVal = $("#date").val();
   var yr = parseInt(moment.unix(sliderVal).format("YYYY"));
   var date = parseInt(moment.unix(sliderVal).format("YYYYMMDD"));
+  console.log(sliderVal)
+  console.log(yr)
+  console.log(date)
+  setLayers();
   addLayers(yr, date);
 });
 
@@ -245,10 +692,28 @@ map.on('style.load', function() {
 function switchStyle() {
   var basemaps = document.getElementById('styleSwitcher');
   var inputs = basemaps.getElementsByTagName('input');
-
+console.log(inputs)
+console.log(inputs.length)
   function switchLayer(layer) {
     var layerId = layer.target.id;
-    map.setStyle('mapbox://styles/mapbox/' + layerId + '-v9');
+    if(layerId == 'hidden') {
+      // map.removeLayer('buildings')
+      // map.removeLayer('netherlands_buildings-6wkgma')
+      // map.removeLayer('manhattan_parcels_03-9qwzuf')
+      // map.removeLayer('brooklyn_parcels_03-7y3mp4')
+      // map.removeLayer('queens_parcels_03-cihsme')
+      // map.removeLayer('bronx_parcels_03-4jgu91')
+      // map.removeLayer('staten_island_parcels_03-1o8j1i')
+      // map.removeLayer('US_Minor_Boundaries-1lyzcs')
+      // map.removeLayer('US_Major_Boundaries_Lines-2706lh')
+      // map.removeLayer('us_major_boundary_labels')
+      // map.removeLayer('Indian_Subcontinent_Major_Bou-dpiee3')
+      // map.removeLayer('Indian_Subcontinent_Major_Bou-5gq491')
+      map.setStyle('mapbox://styles/nittyjee/cjg705tp9c5xw2rlhsukbq0bs');
+
+    } else {
+      map.setStyle('mapbox://styles/mapbox/' + layerId + '-v9');
+    }
   }
 
   for (var i = 0; i < inputs.length; i++) {
@@ -256,7 +721,28 @@ function switchStyle() {
   }
 }
 
-function addLayers(yr, date) {
+//}
+//////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+//Do not minimize this line:
+//Unminimize this line:
+                                       function addLayers(yr, date) {
+
+									   
+									   
+/////////////////////////////////////
+//{ MAP LAYERS						                     minimize here.	
+									   
+/////////////////////////////////////
+//{NATURAL EARTH, COMMENTED OUT.
    //Commenting out natural earth raster layer to use Mapbox "outdoor" style option instead
   // map.addLayer({
   //   id: "naturalearth",
@@ -268,15 +754,28 @@ function addLayers(yr, date) {
   //   },
   //   type: "raster"
   // });
+  
+//}
+/////////////////////////////////////
 
-  /////////////////////////////////////////////////////////////
-  //Add buildings layers
-  /////////////////////////////////////////////////////////////
 
-  /////////////////////////////////////////////////////////////
-  //Ames, IA
-  //Buildings
-  /////////////////////////////////////////////////////////////
+
+/////////////////////////////////////
+//{SETTLEMENTS
+
+//{SETTLEMENTS
+
+
+//{BUILDINGS
+
+
+
+
+
+
+
+//{Ames, IA Buildings
+  
   map.addLayer({
     id: "buildings",
     type: "fill",
@@ -304,11 +803,105 @@ function addLayers(yr, date) {
     },
     filter: ["all", ["<=", "YearStart", yr], [">=", "YearEnd", yr]]
   });
+  
+  //}
+  
+  
+  
+  
+//{Ames, IA Downtown Businesses
 
-  /////////////////////////////////////////////////////////////
-  //Netherlands
-  //Buildings
-  /////////////////////////////////////////////////////////////
+/*
+downtown_businesses_1-08ux1u
+nittyjee.2oyoltlf
+downtown_businesses_1
+*/
+
+/*
+downtown_businesses_1-9ftdu5
+nittyjee.2oyoltlf
+downtown_businesses_1
+*/
+
+
+  map.addLayer({
+    id: "downtown_businesses_1-08ux1u",
+    type: "fill",
+    source: {
+      type: "vector",
+      url: "mapbox://nittyjee.2oyoltlf"
+    },
+    "source-layer": "downtown_businesses_1",
+    paint: {
+      "fill-outline-color": "rgba(0,0,0,1)",
+	  
+//      "fill-color": "red"  
+  	  
+//	  /*
+      "fill-color": {
+        property: "styling",
+        type: "categorical",
+        stops: [
+          //Bright Blue
+          ["OCCUPANT", "rgba (255,255,255,0)"],
+          //Orange
+          ["NO LISTING", "rgba(217, 217, 217,0.7)"],
+          //Dark Red
+          ["UNKNOWN", "rgba(217, 217, 217,0.5)"]
+        ]
+	  }
+//	  */
+    },
+    filter: ["all", ["<=", "YearStart", yr], [">=", "YearEnd", yr]]
+  });
+
+/*Note: Crazy Long
+420 Kellogg Ave
+> SW Corner of 5th and Kellogg
+03/31/1963
+*/
+	
+//}
+  
+  
+//{Ames, IA Downtown Street Sections
+
+/*
+downtown_street_sections-b9rw6c
+nittyjee.8d43zmrc
+downtown_street_sections
+*/
+
+
+
+
+  map.addLayer({
+    id: "downtown_street_sections-b9rw6c",
+    type: "line",
+    source: {
+      type: "vector",
+      url: "mapbox://nittyjee.8d43zmrc"
+    },
+    "source-layer": "downtown_street_sections",
+    paint: {
+      "line-color": "blue",
+      "line-width": 6.0
+    },
+    filter: ["all", ["<=", "YearStart", yr], [">=", "YearEnd", yr]]
+  });
+
+
+
+	
+//}
+  
+  
+  
+  
+  
+  
+
+//{Netherlands Buildings
 
   map.addLayer({
     id: "netherlands_buildings-6wkgma",
@@ -337,15 +930,564 @@ function addLayers(yr, date) {
     },
     filter: ["all", ["<=", "YearStart", yr], [">=", "YearEnd", yr]]
   });
+  
+
+  
+
+  //}  
+  
+  
+  
+  
+
+//{CHICAGO BUILDINGS
+
+  /*
+  Chicago_Buildings-dg5b3w
+  Chicago_Buildings
+  nittyjee.a3jtdrwh
+
+  */
+
+  map.addLayer({
+    id: "Chicago_Buildings-dg5b3w",
+    type: "fill",
+    source: {
+      type: "vector",
+      url: "mapbox://nittyjee.a3jtdrwh"
+    },
+    "source-layer": "Chicago_Buildings",
+    paint: {
+      "fill-outline-color": "rgba(0,0,0,1)",
+      "fill-color": {
+        property: "DayStart",
+        type: "interval",
+        stops: [
+          [0, "#2e3436"],
+//          [11111111, "rgba(255,255,255,0)"],
+          [11110101, "rgba(255,255,255,0)"],
+          [11111112, "#2e3436"],
+          [17650101, "#888a85"],
+          [19000101, "#5c3566"],
+          [19100101, "#75507b"],
+          [19200101, "#a40000"],
+          [19300101, "#808000"],
+          [19650101, "#f57900"],
+          [19950101, "#edd400"]
+        ]
+      }
+    },
+    filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+  });
+  
+//}
+
+//}
+  
+
+//{PARCELS
+
+//{ NYC Parcels
+
+//{Manhattan Parcels
+
+
+  map.addLayer({
+    id: "manhattan_parcels_03-9qwzuf",
+    type: "fill",
+    source: {
+      type: "vector",
+      url: "mapbox://nittyjee.6pz0gg5h"
+    },
+    "source-layer": "manhattan_parcels_03312018",
+    paint: {
+      "fill-outline-color": "rgba(0,0,0,0)",
+      "fill-color": {
+        property: "DayStart",
+        type: "interval",
+        stops: [
+          [0, "#2e3436"],
+          [11111111, "rgba(255,255,255,0)"],
+          [11111112, "#2e3436"],
+          [17650101, "#888a85"],
+          [19000101, "#5c3566"],
+          [19100101, "#75507b"],
+          [19200101, "#a40000"],
+          [19300101, "#808000"],
+          [19650101, "#f57900"],
+          [19950101, "#edd400"]
+        ]
+      }
+    },
+    filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+  });
+  
+//}
+
+//{Brooklyn Parcels
+
+  map.addLayer({
+    id: "brooklyn_parcels_03-7y3mp4",
+    type: "fill",
+    source: {
+      type: "vector",
+      url: "mapbox://nittyjee.1lzkw0cv"
+    },
+    "source-layer": "brooklyn_parcels_03312018",
+    paint: {
+      "fill-outline-color": "rgba(0,0,0,0)",
+      "fill-color": {
+        property: "DayStart",
+        type: "interval",
+        stops: [
+          [0, "#2e3436"],
+          [11110101, "rgba(255,255,255,0)"],
+          [11111112, "#2e3436"],
+          [17650101, "#888a85"],
+          [19000101, "#5c3566"],
+          [19100101, "#75507b"],
+          [19200101, "#a40000"],
+          [19300101, "#808000"],
+          [19650101, "#f57900"],
+          [19950101, "#edd400"]
+        ]
+      }
+    },
+    filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+  });
+
+//}
+
+//{Queens Parcels
+
+  map.addLayer({
+    id: "queens_parcels_03-cihsme",
+    type: "fill",
+    source: {
+      type: "vector",
+      url: "mapbox://nittyjee.au26ytcw"
+    },
+    "source-layer": "queens_parcels_03312018",
+    paint: {
+      "fill-outline-color": "rgba(0,0,0,0)",
+      "fill-color": {
+        property: "DayStart",
+        type: "interval",
+        stops: [
+          [0, "#2e3436"],
+          [11110101, "rgba(255,255,255,0)"],
+          [11111112, "#2e3436"],
+          [17650101, "#888a85"],
+          [19000101, "#5c3566"],
+          [19100101, "#75507b"],
+          [19200101, "#a40000"],
+          [19300101, "#808000"],
+          [19650101, "#f57900"],
+          [19950101, "#edd400"]
+        ]
+      }
+    },
+    filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+  });
+
+//}
+
+//{Bronx Parcels
+
+
+  map.addLayer({
+    id: "bronx_parcels_03-4jgu91",
+    type: "fill",
+    source: {
+      type: "vector",
+      url: "mapbox://nittyjee.3nkvmmm0"
+    },
+    "source-layer": "bronx_parcels_03312018",
+    paint: {
+      "fill-outline-color": "rgba(0,0,0,0)",
+      "fill-color": {
+        property: "DayStart",
+        type: "interval",
+        stops: [
+          [0, "#2e3436"],
+          [11110101, "rgba(255,255,255,0)"],
+          [11111112, "#2e3436"],
+          [17650101, "#888a85"],
+          [19000101, "#5c3566"],
+          [19100101, "#75507b"],
+          [19200101, "#a40000"],
+          [19300101, "#808000"],
+          [19650101, "#f57900"],
+          [19950101, "#edd400"]
+        ]
+      }
+    },
+    filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+  });
+
+//}
+
+//{Staten Island Parcels
+
+  map.addLayer({
+    id: "staten_island_parcels_03-1o8j1i",
+    type: "fill",
+    source: {
+      type: "vector",
+      url: "mapbox://nittyjee.1h8zis4l"
+    },
+    "source-layer": "staten_island_parcels_03312018",
+    paint: {
+      "fill-outline-color": "rgba(0,0,0,0)",
+      "fill-color": {
+        property: "DayStart",
+        type: "interval",
+        stops: [
+          [0, "#2e3436"],
+          [11110101, "rgba(255,255,255,0)"],
+          [11111112, "#2e3436"],
+          [17650101, "#888a85"],
+          [19000101, "#5c3566"],
+          [19100101, "#75507b"],
+          [19200101, "#a40000"],
+          [19300101, "#808000"],
+          [19650101, "#f57900"],
+          [19950101, "#edd400"]
+        ]
+      }
+    },
+    filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+  });
+  
+//}
+  
+  
+//}
+  
+//}
+
+
+//}
+
+//{SETTLEMENT POINTS -> ORGANIZE FURTHER
 
   /////////////////////////////////////////////////////////////
-  //Add boundaries layers
+  //Add Settlements Layer
+  //Points
   /////////////////////////////////////////////////////////////
 
   /////////////////////////////////////////////////////////////
-  //Add Minor Boundaries Layer
-  //USA
+  //Global Settlements
   /////////////////////////////////////////////////////////////
+  
+  
+  /*
+
+  map.addLayer({
+    id: "population",
+    type: "circle",
+    source: {
+      type: "vector",
+      url: "mapbox://nittyjee.c9okffto"
+    },
+    "source-layer": "shp-2lsmbo",
+    paint: {
+      //      'circle-radius': 4,
+
+      "circle-radius": {
+        property: "pop",
+        stops: [
+          [0, 1],
+          [10000, 2],
+          [50000, 3],
+          [250000, 4],
+          [1000000, 5],
+          [2500000, 6],
+          [5000000, 7],
+          [10000000, 8],
+          [30000000, 9]
+        ]
+      }
+
+      /*
+				'circle-color': {
+                property: 'pop',
+                stops: [
+                    [0, '#F2F12D'],
+                    [10000, '#EED322'],
+                    [50000, '#E6B71E'],
+                    [250000, '#DA9C20'],
+                    [1000000, '#CA8323'],
+                    [2500000, '#B86B25'],
+                    [5000000, '#A25626'],
+                    [10000000, '#8B4225'],
+                    [30000000, '#723122']
+                ]
+				}
+ */
+ 
+/*
+ 
+ 
+    },
+    filter: ["all", ["<=", "YearStart", yr], [">=", "YearEnd", yr]]
+  });
+
+*/
+
+
+//}
+
+//{ZOOMABLE POINTS
+
+map.on('load', function () {
+  var lbl_color = "#482525";
+  var lbl_color_hover = "#ff0000";
+  var cities = ['ames', 'amsterdam', 'chicago', 'newyork'];
+  map.addLayer({
+      "id": "places-chicago",
+      "type": "symbol",
+      "source": {
+          "type": "geojson",
+          "data": {
+              "type": "FeatureCollection",
+              "features": [{
+                "type": "Feature",
+                "properties": {
+                    "title": "Chicago",
+                    "icon": "circle",
+                    "bounds": [[-88.202, 41.6059], [-87.0924, 42.0984]]
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [-87.6554, 41.8176]
+                }
+              }]
+          }
+      },
+      "layout": {
+        "icon-image": "{icon}-11",
+        "text-font": ["Open Sans Regular"],
+        "text-field": '{title}',
+        "text-size": 14,
+        "text-anchor": "top",
+        "text-offset": [0, 0.3],
+      },
+      "paint": {
+        "text-color": lbl_color
+      }
+  });
+
+  map.addLayer({
+      "id": "places-newyork",
+      "type": "symbol",
+      "source": {
+          "type": "geojson",
+          "data": {
+              "type": "FeatureCollection",
+              "features": [{
+                "type": "Feature",
+                "properties": {
+                    "title": "New York City",
+                    "icon": "circle",
+                    "bounds": [[-74.6538, 40.459], [-73.3429, 41.0178]]
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [-74.006054, 40.712998]
+                }
+              }]
+          }
+      },
+      "layout": {
+        "icon-image": "{icon}-11",
+        "text-font": ["Open Sans Regular"],
+        "text-field": '{title}',
+        "text-size": 14,
+        "text-anchor": "top",
+        "text-offset": [4, 1],
+      },
+      "paint": {
+        "text-color": lbl_color
+      }
+  });
+  
+  /*
+  
+"bounds": [[RIGHT, TOP], [LEFT, BOTTOM]]
+
+"bounds": [-74.6538, 40.459], [-73.3429, 41.0178]
+					
+  Center:   #9.8/40.7082/-73.9952
+  Top:      #9.8/40.459/-73.9865
+  Bottom:   #9.8/41.0178/-73.9873
+  Left:     #9.8/40.6986/-73.3429
+  Right:    #9.7/40.6909/-74.6538
+  
+  */
+
+
+  map.addLayer({
+      "id": "places-ames",
+      "type": "symbol",
+      "source": {
+          "type": "geojson",
+          "data": {
+              "type": "FeatureCollection",
+              "features": [{
+                "type": "Feature",
+                "properties": {
+                    "title": "Ames",
+                    "icon": "circle",
+                    "bounds": [[-93.6737, 42.0132], [-93.5966, 42.0495]]
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [-93.6357, 42.03]
+                }
+              }]
+          }
+      },
+      "layout": {
+        "icon-image": "{icon}-11",
+        "text-font": ["Open Sans Regular"],
+        "text-field": '{title}',
+        "text-size": 14,
+        "text-anchor": "top",
+        "text-offset": [0, 0.3],
+      },
+      "paint": {
+        "text-color": lbl_color
+      }
+  });
+  
+  
+
+  map.addLayer({
+      "id": "places-amsterdam",
+      "type": "symbol",
+      "source": {
+          "type": "geojson",
+          "data": {
+              "type": "FeatureCollection",
+              "features": [{
+                "type": "Feature",
+                "properties": {
+                    "title": "Amsterdam",
+                    "icon": "circle",				
+                    "bounds": [[4.8405, 52.3518], [4.9433, 52.3845]]
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [4.8866, 52.3677]
+                }
+              }]
+          }
+      },
+      "layout": {
+        "icon-image": "{icon}-11",
+        "text-font": ["Open Sans Regular"],
+        "text-field": '{title}',
+        "text-size": 14,
+        "text-anchor": "top",
+        "text-offset": [0, 0.3],
+      },
+      "paint": {
+        "text-color": lbl_color
+      }
+  });
+  
+  
+  //Amsterdam
+  //#13/52.3677/4.8866
+
+  /*
+  Top:    #13.5/52.3518/4.8926
+  Bottom: #13.5/52.3845/4.8883
+  Left:   #13.5/52.3665/4.9433
+  Right:  #13.5/52.3677/4.8405
+  */
+  
+
+  var map_city_click = function (e) {
+    if (feature = getRenderedFeature(e.point)) {
+      var bounds = JSON.parse(feature.properties.bounds);
+
+      map.fitBounds(bounds, {
+        padding: {top: 10, bottom:25, left: 15, right: 5}
+      });
+    }
+  }
+
+  map.on("click", map_city_click);
+
+  map.on('mousemove', function (e) {
+
+      if (feature = getRenderedFeature(e.point)) {
+        layer = feature.layer.id;
+        map.setPaintProperty(layer, 'text-color', lbl_color_hover);
+        map.getCanvas().style.cursor = 'pointer';
+      } else {
+        map.setPaintProperty('places-ames', 'text-color', lbl_color);
+        map.setPaintProperty('places-amsterdam', 'text-color', lbl_color);
+        map.setPaintProperty('places-chicago', 'text-color', lbl_color);
+        map.setPaintProperty('places-newyork', 'text-color', lbl_color);
+        map.getCanvas().style.cursor = '';
+      }
+  });
+
+  function getRenderedFeature(point) {
+    var width = 50;
+    var height = 14;
+    var feature = map.queryRenderedFeatures([
+      [point.x - width / 2, point.y - height * 0.9],
+      [point.x + width / 2, point.y + height * 0.1]
+    ], { layers: ['places-ames', 'places-amsterdam', 'places-newyork', 'places-chicago'] })[0];
+
+    if (typeof feature != 'undefined') {
+      return feature;
+    } else {
+      return 0;
+    }
+  }
+
+});
+
+//}
+
+//{TRYING GLOBAL LABELS
+
+  map.addSource("places_labels_src", {
+    type: "vector",
+    url: "mapbox://nittyjee.71d7u55v"
+  });
+
+  map.addLayer({
+    id: "global_labels",
+    source: "places_labels_src",
+    "source-layer": "chicago_and_nyc-duq2nh",
+    type: "symbol",
+    maxzoom: 6,
+    layout: {
+      "text-field": "{city}"
+    },
+    filter: ["all", ["<=", "YearStart", date], [">=", "YearEnd", date]]
+  });
+  
+//}
+
+//}
+/////////////////////////////////////
+
+
+
+/////////////////////////////////////
+//{ BOUNDARIES
+
+
+//{ United States
+
+//{ United States Minor Boundaries 
 
   map.addLayer({
     id: "US_Minor_Boundaries-1lyzcs",
@@ -364,14 +1506,11 @@ function addLayers(yr, date) {
     filter: ["all", ["<=", "YearStart", yr], [">=", "YearEnd", yr]]
   });
 
-  /////////////////////////////////////////////////////////////
-  //Add Major Boundaries Layer
-  //USA
-  /////////////////////////////////////////////////////////////
+//}
 
-  /////////////////////////////////////////////////////////////
-  //Lines
-  /////////////////////////////////////////////////////////////
+//{ United States Major Boundaries 
+
+//{ United States Major Boundaries Lines
 
   map.addLayer({
     //    'id': 'US_Major_Boundaries_Lines-aceyhz',
@@ -407,19 +1546,16 @@ function addLayers(yr, date) {
     },
     filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
   });
+  
+//}
 
-  /////////////////////////////////////////////////////////////
-  //Add Labels Layer
-  //Major Boundaries
-  //USA
-  /////////////////////////////////////////////////////////////
+//{ United States Major Boundaries Labels
 
   map.addSource("us_major_boundary_labels_src", {
     type: "vector",
     url: "mapbox://nittyjee.7x096jcj"
   });
 
-  /* labels for US Major Boundaries */
   map.addLayer({
     id: "us_major_boundary_labels",
     source: "us_major_boundary_labels_src",
@@ -436,11 +1572,19 @@ function addLayers(yr, date) {
   */
     filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
   });
+  
+//}
 
-  /////////////////////////////////////////////////////////////
-  //Add Major Boundaries Layer
-  //Indian Subcontinent
-  /////////////////////////////////////////////////////////////
+//}
+
+//}
+
+
+//{Indian Subcontinent
+
+//{Indian Subcontinent Fills
+
+
 
   map.addLayer({
     id: "Indian_Subcontinent_Major_Bou-dpiee3",
@@ -577,11 +1721,10 @@ function addLayers(yr, date) {
     filter: ["all", ["<=", "YearStart", yr], [">=", "YearEnd", yr]]
   });
 
-  /////////////////////////////////////////////////////////////
-  //Add Major Boundaries Layer
-  //Indian Subcontinent
-  //Lines
-  /////////////////////////////////////////////////////////////
+//}
+
+
+//{Indian Subcontinent Lines
 
   map.addLayer({
     id: "Indian_Subcontinent_Major_Bou-5gq491",
@@ -705,59 +1848,118 @@ function addLayers(yr, date) {
 
     filter: ["all", ["<=", "YearStart", yr], [">=", "YearEnd", yr]]
   });
+  
+//}
 
-  /////////////////////////////////////////////////////////////
-  //Add Settlements Layer
-  //Points
-  /////////////////////////////////////////////////////////////
+//}Indian Subcontinent Section End
 
-  /////////////////////////////////////////////////////////////
-  //Global Settlements
-  /////////////////////////////////////////////////////////////
+
+//{NYC MUNICIPALITIES
+
+  //////////////
+  //NYC MUNICIPALITIES LINES
+  //////////////
 
   map.addLayer({
-    id: "population",
-    type: "circle",
+//    id: "nyc_municipalities_lines-604nzo",
+    id: "nyc_municipalities_lines-cztvls",
     source: {
       type: "vector",
-      url: "mapbox://nittyjee.c9okffto"
+//      url: "mapbox://nittyjee.81l6dnd6"
+      url: "mapbox://nittyjee.34hs9r49"
     },
-    "source-layer": "shp-2lsmbo",
+    "source-layer": "nyc_municipalities_lines",
+	type: "line",
+    minzoom: 7,
     paint: {
-      //      'circle-radius': 4,
-
-      "circle-radius": {
-        property: "pop",
-        stops: [
-          [0, 1],
-          [10000, 2],
-          [50000, 3],
-          [250000, 4],
-          [1000000, 5],
-          [2500000, 6],
-          [5000000, 7],
-          [10000000, 8],
-          [30000000, 9]
-        ]
-      }
-
-      /*
-				'circle-color': {
-                property: 'pop',
-                stops: [
-                    [0, '#F2F12D'],
-                    [10000, '#EED322'],
-                    [50000, '#E6B71E'],
-                    [250000, '#DA9C20'],
-                    [1000000, '#CA8323'],
-                    [2500000, '#B86B25'],
-                    [5000000, '#A25626'],
-                    [10000000, '#8B4225'],
-                    [30000000, '#723122']
-                ]
-				}
- */
-    },
-    filter: ["all", ["<=", "YearStart", yr], [">=", "YearEnd", yr]]
+//    "line-offset": 1,
+      "line-color": "rgba(0,0,0,1)",
+      "line-width": 1.5
+	  },
+    filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
   });
+
+
+  //////////////
+  //NYC MUNICIPALITIES FILLED
+  //////////////
+
+/*
+
+  map.addLayer({
+    id: "NYC_Municipalities-1ytq8a",
+    source: {
+      type: "vector",
+      url: "mapbox://nittyjee.8q6y4nhh"
+    },
+    "source-layer": "NYC_Municipalities",
+    type: "fill",
+//    maxzoom: 6,
+    paint: {
+	  "fill-outline-color": "rgba(0,0,0,1)",
+      "fill-color": "rgba(0,0,0,0.2)"
+	  },
+    filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+  });
+
+
+*/
+
+
+   /////////////////////////////////////////////////////////////
+  //Add Labels Layer
+  //NYC MUNICIPALITIES
+  /////////////////////////////////////////////////////////////
+
+  //NOTE: MUST USE ZIPPED SHAPEFILE. MBTILES WILL NOT WORK.
+
+  map.addSource("nyc_labels_src", {
+    type: "vector",
+//    url: "mapbox://nittyjee.11suz4o4"
+    url: "mapbox://nittyjee.dvdzyqyb"
+  });
+
+  map.addLayer({
+//	id: "NYC_labels2",
+	id: "labels_shapefile-70j5np",
+    source: "nyc_labels_src",
+//    "source-layer": "NYC_labels2-6zzh1p",
+    "source-layer": "labels_shapefile-70j5np",
+    type: "symbol",
+    minzoom: 8,
+    layout: {
+      "text-field": "{NAME}"
+    },
+    /*
+  'paint': {
+    'text-color': 'red'
+  },
+  */
+    filter: ["all", ["<=", "DayStart", date], [">=", "DayEnd", date]]
+  });
+  
+//}
+
+
+//} Boundaries section end.
+/////////////////////////////////////
+
+
+
+//} Map Layers Section End 
+
+
+
+
+
+
+//Don't remove/change/move this bracket:
 }
+/////////////////////////////////////////
+  
+
+
+
+
+
+/* End of Rob Code */
