@@ -4,7 +4,7 @@
 //////////////////////////////////////////////////
 
 mapboxgl.accessToken =
-  "pk.eyJ1Ijoibml0dHlqZWUiLCJhIjoiY20waDRsYWVmMDdoMDJscTRmMTB1NWJhdCJ9.Y9Y5qPNB5bviltf6cVG1uA";
+  "pk.eyJ1Ijoibml0dHlqZWUiLCJhIjoiY204dGJ4Nm1xMDE0NjJqcHV0Y3Bybmc5NyJ9.WRwm3SxJH-6CB-xUM_piXA";
 
 var map = new mapboxgl.Map({
   container: "map",
